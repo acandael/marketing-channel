@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alternative Health Practitioner Directory (Germany) — PRD</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    html { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { font-feature-settings: "cv11", "ss01"; }
+    @media print {
+      html { background: white !important; color: black !important; color-scheme: light; }
+      html.dark { color-scheme: light; }
+      html.dark body, html.dark * { background: white !important; color: black !important; border-color: #d4d4d8 !important; }
+      .no-print { display: none !important; }
+      .print-card { break-inside: avoid; page-break-inside: avoid; }
+      header.sticky { position: static !important; backdrop-filter: none !important; }
+      main { padding-top: 0 !important; }
+      a { color: black !important; text-decoration: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+  <header class="sticky top-0 z-10 backdrop-blur bg-zinc-50/80 dark:bg-zinc-950/80 border-b border-zinc-200 dark:border-zinc-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <span class="text-sm font-medium text-zinc-500 dark:text-zinc-400">PRD · Alternative Health Practitioner Directory</span>
+      <button id="theme-toggle" class="no-print inline-flex items-center justify-center w-9 h-9 rounded-md border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition" aria-label="Toggle theme">
+        <i data-lucide="sun" class="hidden dark:inline-block w-4 h-4"></i>
+        <i data-lucide="moon" class="inline-block dark:hidden w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-14">
+
+    <!-- DISCLAIMER -->
+    <div class="rounded-lg border border-amber-200 dark:border-amber-900/60 bg-amber-50 dark:bg-amber-950/30 p-4 text-sm text-amber-900 dark:text-amber-200">
+      <p><strong class="font-semibold">About this file:</strong> Everything in <code class="font-mono text-xs">_build_plan/</code> (this PRD and the per-milestone folders) is a temporary documentation artifact for the initial build-out of this codebase. These files are not functional — no code, configuration, runtime logic, tests, or deployment process should import, read, reference, or depend on anything in <code class="font-mono text-xs">_build_plan/</code>. Once the initial milestones are built and shipped, the entire <code class="font-mono text-xs">_build_plan/</code> folder is expected to be deleted from the codebase.</p>
+    </div>
+
+    <!-- HERO -->
+    <section>
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight">Alternative Health Practitioner Directory <span class="text-zinc-400 dark:text-zinc-600">(Germany)</span></h1>
+      <p class="mt-5 text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed">A German-language directory website that helps people find alternative health practitioners across Germany, filtered by specialty and location. To seed the directory with 300–500 quality practitioners, an admin can pre-create basic profiles and email practitioners a "claim your profile" link; once claimed, practitioners manage and enhance their profiles with premium content.</p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Ruby on Rails 8</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Hotwire (Turbo + Stimulus)</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Plain CSS</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">PostgreSQL</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Rails 8 built-in auth</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Solid Queue</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Active Storage</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Resend</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Cloudflare R2</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300">Leaflet + OpenStreetMap</span>
+      </div>
+    </section>
+
+    <!-- WHAT THE APP DOES -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>What the app does
+      </h2>
+      <ul class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0">
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="search" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">Public directory search</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Visitors browse and filter practitioners by specialty and by city or postal code, without needing to sign up.</p>
+            </div>
+          </div>
+        </li>
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="user" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">Public practitioner profile</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Each practitioner has a shareable public page with photo, bio, specialties, contact info, and a map pin.</p>
+            </div>
+          </div>
+        </li>
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="shield" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">Admin backend for seed profiles</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Admin logs in, creates basic (unclaimed) practitioner profiles, and manages the specialty taxonomy.</p>
+            </div>
+          </div>
+        </li>
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="mail" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">"Claim your profile" email flow</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Admin sends a unique claim link by email; practitioner clicks, sets a password, and takes ownership.</p>
+            </div>
+          </div>
+        </li>
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="pencil" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">Practitioner profile management</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Claimed practitioners log in to a dashboard and edit every field on their profile via a single form.</p>
+            </div>
+          </div>
+        </li>
+        <li class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5 w-8 h-8 rounded-md bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+              <i data-lucide="wand-2" class="w-4 h-4 text-zinc-700 dark:text-zinc-300"></i>
+            </div>
+            <div>
+              <p class="font-medium text-zinc-900 dark:text-zinc-100">Premium (enhanced) profile content</p>
+              <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Claimed profiles unlock richer fields — photo, long bio, gallery, opening hours, services, languages, qualifications.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ALREADY PROVIDED -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="package-check" class="w-3.5 h-3.5"></i>Already provided by Rails 8
+      </h2>
+      <ul class="mt-5 flex flex-wrap gap-2 list-none p-0">
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Signup, login, logout, password reset (built-in auth generator)
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Session management
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Database migrations
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Background job runner (Solid Queue)
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>File uploads (Active Storage)
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Mailer scaffolding (Action Mailer)
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Development email previews
+        </li>
+        <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-700 dark:text-zinc-300">
+          <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>Hotwire (Turbo + Stimulus) bundled
+        </li>
+      </ul>
+    </section>
+
+    <!-- OUT OF SCOPE -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="minus-circle" class="w-3.5 h-3.5"></i>Out of scope (v1)
+      </h2>
+      <ul class="mt-5 space-y-2.5 list-none p-0">
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Reviews and ratings</span><span class="text-zinc-500 dark:text-zinc-400"> — moderation, disputes, and fake-review handling would swamp v1.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Contact / inquiry form on profiles</span><span class="text-zinc-500 dark:text-zinc-400"> — visitors reach practitioners via the phone, email, and website already shown on the page.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Online booking / calendar integration</span><span class="text-zinc-500 dark:text-zinc-400"> — a large feature area on its own, not needed to prove the directory.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Payments and paid practitioner tiers</span><span class="text-zinc-500 dark:text-zinc-400"> — claiming and premium content are free in v1 to accelerate growth.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Public visitor accounts</span><span class="text-zinc-500 dark:text-zinc-400"> — visitors don't sign up, log in, save favourites, or bookmark.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Social login</span><span class="text-zinc-500 dark:text-zinc-400"> — only admin and claimed practitioners log in; email + password is enough.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Practitioner community / messaging</span><span class="text-zinc-500 dark:text-zinc-400"> — not the point of the site.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Blog and content marketing</span><span class="text-zinc-500 dark:text-zinc-400"> — nice for SEO later; not v1.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Native mobile app or browser extension</span><span class="text-zinc-500 dark:text-zinc-400"> — a responsive website is sufficient.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">German UI translation</span><span class="text-zinc-500 dark:text-zinc-400"> — full UI stays in English for v1; German translation is a future project.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Rails I18n scaffolding</span><span class="text-zinc-500 dark:text-zinc-400"> — hard-coded English strings for v1; I18n comes with the German translation project.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Practitioner-facing analytics</span><span class="text-zinc-500 dark:text-zinc-400"> — profile view counts and click-throughs come later.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Bulk CSV import of practitioners</span><span class="text-zinc-500 dark:text-zinc-400"> — admin creates seed profiles one at a time via the admin UI in v1.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Radius search, map-based search, "near me"</span><span class="text-zinc-500 dark:text-zinc-400"> — v1 search matches by city name / postal code text only.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Multiple locations per practitioner</span><span class="text-zinc-500 dark:text-zinc-400"> — one practice address per profile.</span></span>
+        </li>
+        <li class="flex items-start gap-3">
+          <i data-lucide="x" class="w-4 h-4 mt-1 shrink-0 text-zinc-400 dark:text-zinc-600"></i>
+          <span class="text-zinc-700 dark:text-zinc-300"><span class="font-medium">Automated claim-invitation reminders</span><span class="text-zinc-500 dark:text-zinc-400"> — admin re-sends invitations manually.</span></span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- INTEGRATIONS -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="plug" class="w-3.5 h-3.5"></i>External integrations
+      </h2>
+      <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="send" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Resend</h3>
+            <span class="ml-auto text-xs text-zinc-500 dark:text-zinc-400">Transactional email</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Sends "claim your profile" invitations and password-reset emails from a verified sending domain, with high deliverability.</p>
+          <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5"><i data-lucide="key" class="w-3 h-3"></i>Credentials needed</p>
+          <ul class="mt-2 space-y-1.5 list-none p-0">
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Resend account</li>
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Verified sending domain (DNS records)</li>
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Resend API key</li>
+          </ul>
+        </div>
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="cloud" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Cloudflare R2</h3>
+            <span class="ml-auto text-xs text-zinc-500 dark:text-zinc-400">Cloud file storage</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Stores profile photos and premium gallery images in the cloud so uploads survive deploys, with S3-compatible API and no bandwidth fees.</p>
+          <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5"><i data-lucide="key" class="w-3 h-3"></i>Credentials needed</p>
+          <ul class="mt-2 space-y-1.5 list-none p-0">
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Cloudflare account</li>
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>R2 bucket</li>
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>R2 API token (access key + secret)</li>
+          </ul>
+        </div>
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="map" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Leaflet + OpenStreetMap</h3>
+            <span class="ml-auto text-xs text-zinc-500 dark:text-zinc-400">Map tiles on profiles</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Renders a small map with a pin on each public practitioner profile, using OSM tiles served through Leaflet.</p>
+          <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5"><i data-lucide="key" class="w-3 h-3"></i>Credentials needed</p>
+          <ul class="mt-2 space-y-1.5 list-none p-0">
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>None</li>
+          </ul>
+        </div>
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Nominatim (OSM)</h3>
+            <span class="ml-auto text-xs text-zinc-500 dark:text-zinc-400">Address geocoding</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">Turns a German street address into latitude/longitude so it can be placed on a map and matched by location.</p>
+          <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5"><i data-lucide="key" class="w-3 h-3"></i>Credentials needed</p>
+          <ul class="mt-2 space-y-1.5 list-none p-0">
+            <li class="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300"><i data-lucide="key-round" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>None (respect usage policy: identifying User-Agent, low-volume)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA MODEL -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="database" class="w-3.5 h-3.5"></i>Data model
+      </h2>
+      <p class="mt-3 text-sm text-zinc-500 dark:text-zinc-400">What the app needs to remember.</p>
+      <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="box" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">User</h3>
+          </div>
+          <table class="mt-4 w-full text-sm">
+            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">email</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">The login email address.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">password</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Stored securely, never in plain text.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">role</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Either "admin" or "practitioner".</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-4 text-xs text-zinc-500 dark:text-zinc-400"><span class="font-semibold uppercase tracking-[0.14em] text-[11px]">Related to</span> · A practitioner-role User has one Practitioner profile.</p>
+        </div>
+
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="box" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Practitioner</h3>
+          </div>
+          <table class="mt-4 w-full text-sm">
+            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">salutation</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Herr / Frau / Dr. / etc.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">full_name</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">The practitioner's full name.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">street_address</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Street and house number of the practice.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">postal_code</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">German postal code (PLZ).</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">city</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">City name.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">bundesland</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">German state (optional).</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">phone</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Public contact phone number.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">public_email</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">The email shown on the profile (distinct from login email).</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">website_url</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Optional website link.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">latitude, longitude</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Filled in automatically by geocoding the address.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">published</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Whether the profile is visible to the public.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">claimed_at</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">When the practitioner claimed the profile (empty if unclaimed).</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">profile_photo</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: uploaded portrait.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">short_tagline</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: one-line headline.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">long_bio</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: rich-text description.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">services_offered</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: list of services provided.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">opening_hours</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: opening times per day of the week.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">languages_spoken</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: languages the practitioner works in.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">qualifications</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: credentials, certifications, training.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">years_in_practice</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: how long they've been practicing.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">gallery_images</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Premium: multiple uploaded images.</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-4 text-xs text-zinc-500 dark:text-zinc-400"><span class="font-semibold uppercase tracking-[0.14em] text-[11px]">Related to</span> · Belongs to 0 or 1 User. Has many Specialties. Has many ClaimInvitations.</p>
+        </div>
+
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="tag" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">Specialty</h3>
+          </div>
+          <table class="mt-4 w-full text-sm">
+            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">name</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Display name of the specialty (e.g., "Homöopathie").</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">slug</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">URL-safe version of the name.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">description</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Optional short explanation of the specialty.</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-4 text-xs text-zinc-500 dark:text-zinc-400"><span class="font-semibold uppercase tracking-[0.14em] text-[11px]">Related to</span> · Many-to-many with Practitioner.</p>
+        </div>
+
+        <div class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+          <div class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4 text-zinc-500 dark:text-zinc-400"></i>
+            <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">ClaimInvitation</h3>
+          </div>
+          <table class="mt-4 w-full text-sm">
+            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">unique_token</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">The long random string embedded in the claim URL.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">email_sent_to</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">The email address the invitation was sent to.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">sent_at</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">When the email went out.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">expires_at</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">30 days after sending by default.</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">claimed_at</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">When the practitioner used the link (empty if unused).</td></tr>
+              <tr><td class="py-2 pr-4 font-mono text-xs font-medium text-zinc-700 dark:text-zinc-300 align-top whitespace-nowrap">status</td><td class="py-2 text-zinc-600 dark:text-zinc-400 leading-relaxed">Pending / claimed / expired.</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-4 text-xs text-zinc-500 dark:text-zinc-400"><span class="font-semibold uppercase tracking-[0.14em] text-[11px]">Related to</span> · Belongs to one Practitioner (a Practitioner can have multiple over time).</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MILESTONES -->
+    <section>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+        <i data-lucide="route" class="w-3.5 h-3.5"></i>Milestones
+      </h2>
+      <div class="mt-5 space-y-5">
+
+        <article class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden">
+          <header class="flex items-center gap-3 p-5 border-b border-zinc-100 dark:border-zinc-800">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center text-sm font-semibold">1</span>
+            <h3 class="font-semibold text-lg text-zinc-900 dark:text-zinc-100">Foundation & Admin CRUD</h3>
+          </header>
+          <div class="p-5">
+            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">Stands up the Rails project with authentication, the admin area, and the machinery for an admin to seed the directory one practitioner at a time. Nothing is public yet.</p>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>What gets built
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-300 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>New Rails 8 app with PostgreSQL, Hotwire, Solid Queue, Active Storage (local disk in dev), and Action Mailer configured for the built-in dev preview.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Plain-CSS styling scaffold in place (one or a few small CSS files, sensible base typography and spacing).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Rails 8 built-in authentication (login, logout, password reset). Users have a role of "admin" or "practitioner".</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Rake / console task for creating the first admin user.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Admin area at <span class="font-mono text-xs">/admin</span>, protected by admin-role check, with a simple dashboard showing counts of practitioners by status.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Specialties CRUD: list, add, rename, delete (with warning when in use).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Practitioners CRUD covering the "basic info" fields: salutation, name, address, postal code, city, Bundesland, phone, public email, website, specialties (multi-select), published (yes/no).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Address geocoding on save via Nominatim; the resulting pin is previewed on a small map and manually adjustable.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Practitioner list with filters (status, city, specialty), name search, sort, pagination, bulk publish/unpublish and delete, per-row edit/delete/view actions.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Confirmation dialogs before destructive actions.</span></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Not in this milestone
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Any public-facing pages (homepage, search, public profile).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Premium fields on Practitioner (photo, bio, gallery, hours, services, etc.).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Claim invitation emails or Resend integration.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Practitioner login, dashboard, or edit form.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Cloudflare R2 storage (Active Storage sits on local disk until milestone 4).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Deployment, DNS, or production hosting concerns.</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-5 rounded-md border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-sm text-emerald-900 dark:text-emerald-200">
+              <p class="flex items-start gap-2"><i data-lucide="flag" class="w-4 h-4 mt-0.5 shrink-0"></i><span><span class="font-semibold">Done when:</span> An admin can log in at <span class="font-mono text-xs">/admin</span>, create a few specialties, add a practitioner with a German address that geocodes correctly onto a preview map, see the practitioner in a filterable list, edit and delete them, and toggle published state. No public pages exist yet.</span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden">
+          <header class="flex items-center gap-3 p-5 border-b border-zinc-100 dark:border-zinc-800">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center text-sm font-semibold">2</span>
+            <h3 class="font-semibold text-lg text-zinc-900 dark:text-zinc-100">Public directory</h3>
+          </header>
+          <div class="p-5">
+            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">Turns the admin-managed practitioner data into a public website that visitors can search and browse. Every practitioner has a real shareable URL.</p>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>What gets built
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-300 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Public homepage that doubles as the search entry point.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Specialty filter (dropdown / multi-select) and location filter (text input for city name or postal code), combinable.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Results list of practitioner cards showing photo/placeholder, name, up to 3 specialty chips, city, tagline snippet.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Sensible default sort, pagination or "load more", helpful empty state.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Public profile page at a friendly slug URL, mobile-responsive, showing name, salutation, specialties, contact block (phone/email/website), address, and a small Leaflet + OSM map with a pin.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Empty premium sections render nothing (no blank blocks).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Subtle "Basic listing — [Name], claim your profile" ribbon on unclaimed profiles.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Basic SEO: title with name + city, meta description drawn from tagline, clean shareable URL.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Only published practitioners are visible publicly; unpublished ones return 404.</span></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Not in this milestone
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Radius / "near me" / map-based search.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Autocomplete or typo-tolerant search.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Reviews, ratings, contact/inquiry form, social sharing, related practitioners, structured data markup.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Photo, long bio, gallery, opening hours, services on the public page (premium fields don't exist yet).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Anything requiring practitioner login.</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-5 rounded-md border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-sm text-emerald-900 dark:text-emerald-200">
+              <p class="flex items-start gap-2"><i data-lucide="flag" class="w-4 h-4 mt-0.5 shrink-0"></i><span><span class="font-semibold">Done when:</span> An anonymous visitor can open the homepage, filter by specialty and by city or postal code, see matching practitioners, click into a profile, and view name/contact/address with a working map pin. Unclaimed profiles show a subtle "Basic listing" ribbon.</span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden">
+          <header class="flex items-center gap-3 p-5 border-b border-zinc-100 dark:border-zinc-800">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center text-sm font-semibold">3</span>
+            <h3 class="font-semibold text-lg text-zinc-900 dark:text-zinc-100">Claim flow</h3>
+          </header>
+          <div class="p-5">
+            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">Wires up transactional email so admins can invite practitioners to claim their listings, and lets a practitioner take ownership via a one-click link that leads to setting a password.</p>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>What gets built
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-300 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Resend integration configured with API key + verified sending domain; production emails go via Resend, development emails via Rails' built-in preview.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>"Send claim invitation" action on the admin practitioner list and edit page, with a confirm dialog pre-filling the practitioner's contact email (editable).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Claim invitation email (English) with friendly explanation, unique claim button, plain-text version, 30-day expiration mentioned.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Public claim landing page that verifies token validity, expiration, and unused status; shows a preview of the practitioner's basic info; asks the practitioner to set a password (email pre-filled and editable).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Successful claim creates a practitioner-role User, links it to the Practitioner, marks the invitation as claimed, sets <span class="font-mono text-xs">claimed_at</span>, logs the practitioner in, and redirects to a welcome screen or their (minimal, stub) dashboard.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Friendly error pages for invalid / expired / already-claimed tokens.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Admin sees per-practitioner invitation status ("invited on X, not claimed" / "claimed on Y") and can re-send an invitation (invalidates previous token).</span></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Not in this milestone
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Full practitioner dashboard or edit form (only a minimal placeholder page after claim).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Premium fields (photo, gallery, hours, etc.) or their editing UI.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Automated reminder emails.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Bulk claim-invitation sending.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Self-serve "claim this listing" from the public profile.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Cloudflare R2 storage setup (still on local disk).</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-5 rounded-md border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-sm text-emerald-900 dark:text-emerald-200">
+              <p class="flex items-start gap-2"><i data-lucide="flag" class="w-4 h-4 mt-0.5 shrink-0"></i><span><span class="font-semibold">Done when:</span> An admin can send a claim invitation to a practitioner's email; the practitioner can open the email (in Resend or in the dev preview), click the button, set a password, and be logged in with the profile marked as claimed. Invalid/expired links show a friendly error. Admin sees claim status in the list.</span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="print-card rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden">
+          <header class="flex items-center gap-3 p-5 border-b border-zinc-100 dark:border-zinc-800">
+            <span class="shrink-0 w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center text-sm font-semibold">4</span>
+            <h3 class="font-semibold text-lg text-zinc-900 dark:text-zinc-100">Practitioner area & premium content</h3>
+          </header>
+          <div class="p-5">
+            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">Turns the placeholder post-claim page into a real dashboard and full profile editor covering every premium field, backed by cloud storage for uploads.</p>
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>What gets built
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-300 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Login redirects practitioner-role users to their own dashboard (admin users still go to the admin area).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Practitioner dashboard: profile photo, name, "Edit profile" and "View my public profile" buttons, profile-completeness indicator based on premium fields.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Practitioner profile edit page, single form grouped into "Basic info" and "Premium content" sections with short field hints.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Basic info editable by practitioner (re-geocodes on address change). Specialties multi-selectable from the admin-managed list; practitioners cannot create new ones.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Premium fields: profile photo (upload + preview + square crop), short tagline, long bio (basic rich text: bold/italic/links/lists), services offered, opening hours (per-day fields), languages spoken, qualifications, years in practice, gallery images (multiple).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Publish toggle so a practitioner can hide their own listing (admin can override).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Settings area: change password, change login email (with re-verification), delete account (soft-delete User, profile reverts to unclaimed and admin is notified).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Cloudflare R2 configured as the Active Storage backend for production; local disk continues in dev.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="check" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"></i><span>Public profile page now renders premium sections when populated (and only when populated).</span></li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <i data-lucide="x-circle" class="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500"></i>Not in this milestone
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-zinc-500 dark:text-zinc-400 list-none p-0">
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Two-factor authentication or social login.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Draft/published version of a profile (all saves go live).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Preview mode, change history, autosave.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Advanced image handling (filters, effects, multiple crops, gallery reorder/captions).</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>Verification badges, multiple practice locations, profile analytics.</span></li>
+                  <li class="flex items-start gap-2"><i data-lucide="minus" class="w-3.5 h-3.5 mt-0.5 shrink-0"></i><span>German UI translation.</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-5 rounded-md border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 p-4 text-sm text-emerald-900 dark:text-emerald-200">
+              <p class="flex items-start gap-2"><i data-lucide="flag" class="w-4 h-4 mt-0.5 shrink-0"></i><span><span class="font-semibold">Done when:</span> A claimed practitioner can log in, land on their dashboard, edit every field including uploading a photo and gallery images (stored in R2 in production), save, and see the changes reflected on their public profile page with premium sections populated. Their public listing no longer shows the "Basic listing" ribbon.</span></p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="pt-8 border-t border-zinc-200 dark:border-zinc-800 text-xs text-zinc-500 dark:text-zinc-400">
+      Generated by <span class="font-medium">bm-prd-creator</span>. Open the milestone-1 <code class="font-mono">prompt.md</code> to start building.
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      var html = document.documentElement;
+      var stored = localStorage.getItem('prd-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var initial = stored ? stored : (prefersDark ? 'dark' : 'light');
+      if (initial === 'dark') html.classList.add('dark');
+      var btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var isDark = html.classList.toggle('dark');
+          localStorage.setItem('prd-theme', isDark ? 'dark' : 'light');
+        });
+      }
+      if (window.lucide) window.lucide.createIcons();
+    })();
+  </script>
+</body>
+</html>

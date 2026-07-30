@@ -1,0 +1,22 @@
+<div class="map-preview"
+     data-controller="map"
+     data-map-latitude-value="<%= practitioner.latitude || 51.1657 %>"
+     data-map-longitude-value="<%= practitioner.longitude || 10.4515 %>"
+     data-map-has-coordinates-value="<%= practitioner.coordinates? %>">
+  <div class="map-preview__canvas" data-map-target="canvas"></div>
+  <p class="map-preview__hint">
+    Address is geocoded on save. Drag the pin to correct the location, then save.
+  </p>
+  <p class="map-preview__coords">
+    <span data-map-target="coords">
+      <% if practitioner.coordinates? %>
+        Lat <%= practitioner.latitude.to_f.round(6) %>, Lng <%= practitioner.longitude.to_f.round(6) %>
+      <% else %>
+        No coordinates yet — enter an address and save, or click on the map to drop a pin.
+      <% end %>
+    </span>
+  </p>
+
+  <%= f.hidden_field :latitude, data: { map_target: "latitudeField" } %>
+  <%= f.hidden_field :longitude, data: { map_target: "longitudeField" } %>
+</div>

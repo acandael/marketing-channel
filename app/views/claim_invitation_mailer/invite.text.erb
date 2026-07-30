@@ -1,0 +1,10 @@
+Hi <%= @practitioner.full_name %>,
+
+You've been added to the Marketing Channel directory for alternative health practitioners in Germany. To manage your listing — add a photo, bio, opening hours, and more — claim your profile by setting a password.
+
+Claim my profile:
+<%= @claim_url %>
+
+This link expires on <%= @expires_on.strftime("%-d %B %Y") %>. If it expires or you didn't expect this email, you can safely ignore it.
+
+— The Marketing Channel team

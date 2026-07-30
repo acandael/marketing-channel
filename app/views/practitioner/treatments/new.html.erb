@@ -1,0 +1,9 @@
+<% content_for :title, "Add treatment" %>
+
+<%= link_to "← Back to treatments", practitioner_treatments_path, class: "back-link" %>
+
+<header class="page-header">
+  <h1 class="page-header__title">Add treatment</h1>
+</header>
+
+<%= render "form", treatment: @treatment %>

@@ -1,0 +1,7 @@
+We received a request to change the email on your Marketing Channel account from
+<%= @user.email_address %> to <%= @user.pending_email_address %>.
+
+Confirm the new email:
+<%= @confirm_url %>
+
+This link expires on <%= @expires_at.strftime("%-d %B %Y at %H:%M") %>. If you didn't request this change, you can safely ignore this email.

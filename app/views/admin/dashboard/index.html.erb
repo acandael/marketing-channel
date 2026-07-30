@@ -1,0 +1,67 @@
+<% content_for :title, "Dashboard" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Dashboard</h1>
+    <p class="page-header__subtitle">At-a-glance status of the directory.</p>
+  </div>
+  <div class="btn-group">
+    <%= link_to "New practitioner", new_admin_practitioner_path, class: "btn btn--primary" %>
+    <%= link_to "New specialty", new_admin_specialty_path, class: "btn btn--secondary" %>
+  </div>
+</header>
+
+<section class="stats-grid" aria-label="Practitioner status counts">
+  <div class="stat-tile">
+    <span class="stat-tile__label">Total</span>
+    <span class="stat-tile__value"><%= @total_count %></span>
+  </div>
+  <div class="stat-tile">
+    <span class="stat-tile__label">Published</span>
+    <span class="stat-tile__value"><%= @published_count %></span>
+  </div>
+  <div class="stat-tile">
+    <span class="stat-tile__label">Unpublished</span>
+    <span class="stat-tile__value"><%= @unpublished_count %></span>
+  </div>
+  <div class="stat-tile">
+    <span class="stat-tile__label">Claimed</span>
+    <span class="stat-tile__value"><%= @claimed_count %></span>
+  </div>
+  <div class="stat-tile">
+    <span class="stat-tile__label">Unclaimed</span>
+    <span class="stat-tile__value"><%= @unclaimed_count %></span>
+  </div>
+</section>
+
+<section class="table-card">
+  <div style="padding: 16px 20px; border-bottom: 1px solid var(--color-border);">
+    <h2 style="font-size: var(--font-size-h3); margin: 0;">Recently updated</h2>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Status</th>
+        <th>Updated</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @recent_practitioners.any? %>
+        <% @recent_practitioners.each do |p| %>
+          <tr>
+            <td><%= link_to p.full_name, edit_admin_practitioner_path(p) %></td>
+            <td><%= p.city %></td>
+            <td><%= status_badges_for(p) %></td>
+            <td class="text-meta"><%= time_ago_in_words(p.updated_at) %> ago</td>
+            <td class="table__actions"><%= link_to "Edit", edit_admin_practitioner_path(p), class: "btn btn--ghost btn--sm" %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="5" class="table__empty">No practitioners yet. <%= link_to "Create the first one", new_admin_practitioner_path %>.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

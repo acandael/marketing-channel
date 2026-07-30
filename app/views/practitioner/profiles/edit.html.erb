@@ -1,0 +1,28 @@
+<% content_for :title, "Edit my profile" %>
+
+<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Edit my profile</h1>
+    <p class="page-header__subtitle">Update the basic details visitors see, and enrich the premium sections below.</p>
+  </div>
+</header>
+
+<%= form_with model: @practitioner, url: practitioner_profile_path, method: :patch,
+              class: "form", multipart: true do |f| %>
+  <% if @practitioner.errors.any? %>
+    <div class="flash flash--alert">
+      <strong><%= pluralize(@practitioner.errors.count, "error") %> prevented this from being saved:</strong>
+      <ul style="margin-top: 8px; margin-left: 20px;"><% @practitioner.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+    </div>
+  <% end %>
+
+  <%= render "basic_info", f: f %>
+  <%= render "premium_content", f: f %>
+
+  <div class="form-actions">
+    <%= f.submit "Save changes", class: "btn btn--primary" %>
+    <%= link_to "Cancel", practitioner_root_path, class: "btn btn--ghost" %>
+  </div>
+<% end %>

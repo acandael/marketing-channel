@@ -1,0 +1,81 @@
+<% content_for :title, "Find your natural health practitioner" %>
+<% content_for :description, "Connect with trusted experts in holistic wellness across Germany. Search by specialty or location." %>
+
+<section class="hero">
+  <div class="wrapper hero__wrapper">
+    <div class="hero__text">
+      <h1 class="hero__title">
+        Find Your Natural <span class="hero__title-accent">Health Practitioner</span>
+      </h1>
+      <p class="hero__content">
+        Connect with trusted experts in holistic wellness near you. Discover personalized care that
+        nurtures your mind, body, and spirit.
+      </p>
+    </div>
+
+    <%= form_with url: root_path, method: :get, class: "hero__search", local: true do %>
+      <div class="hero__search-elements">
+        <input type="text"
+               name="q"
+               value="<%= @filters[:q] %>"
+               class="hero__search-input hero__search-input--query"
+               placeholder="Practitioner or specialisation"
+               aria-label="Practitioner or specialisation">
+        <input type="text"
+               name="near"
+               value="<%= @filters[:near] %>"
+               class="hero__search-input hero__search-input--near"
+               placeholder="Region or postal code"
+               aria-label="Region or postal code">
+        <button type="submit" class="hero__search-submit">Search practitioners</button>
+      </div>
+      <p class="hero__search-note">
+        Search from verified natural health practitioners across the network.
+      </p>
+    <% end %>
+  </div>
+</section>
+
+<section class="featured" id="results">
+  <div class="wrapper featured__wrapper">
+    <div class="featured__text">
+      <h2 class="featured__title">
+        <%= @searching ? "Search results" : "Featured Practitioners" %>
+      </h2>
+      <p class="featured__content">
+        <% if @searching %>
+          <%= pluralize(@pagy.count, "practitioner") %> matching
+          <% if @filters[:q].present? %>
+            <strong><%= @filters[:q] %></strong>
+          <% end %>
+          <% if @filters[:near].present? %>
+            near <strong><%= @filters[:near] %></strong>
+          <% end %>·
+          <%= link_to "reset", root_path %>
+        <% else %>
+          Highly rated experts ready to guide your wellness journey.
+        <% end %>
+      </p>
+    </div>
+
+    <% if @practitioners.any? %>
+      <div class="featured__cards">
+        <% @practitioners.each do |practitioner| %>
+          <%= render "practitioner_card", practitioner: practitioner %>
+        <% end %>
+      </div>
+
+      <% if @pagy.pages > 1 %>
+        <div class="pagination">
+          <%== pagy_nav(@pagy) %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <h3>No practitioners found</h3>
+        <p class="muted">Try a different search term or clear your filters.</p>
+        <p class="mt-16"><%= link_to "Reset filters", root_path, class: "btn btn--secondary" %></p>
+      </div>
+    <% end %>
+  </div>
+</section>

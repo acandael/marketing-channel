@@ -1,0 +1,221 @@
+<%
+  first_specialty = @practitioner.specialties.first&.name
+  phone_href = @practitioner.phone.present? ? "tel:#{@practitioner.phone.gsub(/\s+/, '')}" : nil
+  full_address = [
+    @practitioner.street_address,
+    [@practitioner.postal_code, @practitioner.city].compact_blank.join(" "),
+    "Germany"
+  ].compact_blank.join(", ")
+  directions_url = @practitioner.coordinates? ? "https://www.google.com/maps/dir/?api=1&destination=#{CGI.escape(full_address)}" : nil
+  clinic_name = "#{@practitioner.city} Clinic" if @practitioner.city.present?
+%>
+<% content_for :title, "#{@practitioner.full_name} — #{@practitioner.city}" %>
+<% content_for :description, page_description_for(@practitioner) %>
+<% content_for :canonical, public_practitioner_url(@practitioner) %>
+
+<nav aria-label="Breadcrumb" class="profile-breadcrumb">
+  <div class="wrapper profile-breadcrumb__wrapper">
+    <ol class="profile-breadcrumb__list">
+      <li class="profile-breadcrumb__item"><%= link_to "Home", root_path, class: "profile-breadcrumb__link" %></li>
+      <li class="profile-breadcrumb__item"><%= link_to "Practitioners", root_path(anchor: "results"), class: "profile-breadcrumb__link" %></li>
+      <li class="profile-breadcrumb__item">
+        <span class="profile-breadcrumb__current" aria-current="page"><%= @practitioner.full_name %></span>
+      </li>
+    </ol>
+  </div>
+</nav>
+
+<% unless @practitioner.claimed? %>
+  <div class="wrapper" style="padding-block: 0 8px;">
+    <div class="claim-ribbon" role="note">
+      <strong>Basic listing</strong> — this profile hasn't been claimed by <%= @practitioner.full_name %> yet.
+    </div>
+  </div>
+<% end %>
+
+<section class="profile-hero">
+  <div class="wrapper profile-hero__wrapper">
+    <div class="profile-hero__avatar-wrapper">
+      <% if @practitioner.profile_photo.attached? %>
+        <%= image_tag @practitioner.profile_photo.variant(:square),
+                      alt: @practitioner.full_name,
+                      class: "profile-hero__avatar" %>
+      <% else %>
+        <div class="profile-hero__avatar-placeholder" aria-hidden="true"><%= avatar_initial(@practitioner) %></div>
+      <% end %>
+      <% if @practitioner.claimed? %>
+        <span class="profile-hero__badge" aria-label="Claimed"></span>
+      <% end %>
+    </div>
+
+    <div class="profile-hero__info">
+      <h1 class="profile-hero__name"><%= @practitioner.full_name %></h1>
+      <% if first_specialty %>
+        <p class="profile-hero__subtitle"><%= first_specialty %></p>
+      <% end %>
+      <% if @practitioner.city.present? %>
+        <p class="profile-hero__location"><%= @practitioner.city %></p>
+      <% end %>
+    </div>
+
+    <% if @practitioner.public_email.present? || phone_href %>
+      <div class="profile-hero__actions">
+        <% if @practitioner.public_email.present? %>
+          <%= link_to "Send email", "mailto:#{@practitioner.public_email}",
+                      class: "profile-hero__btn profile-hero__btn--secondary" %>
+        <% end %>
+        <% if phone_href %>
+          <%= link_to "Call", phone_href, class: "profile-hero__btn profile-hero__btn--primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<div class="profile-content">
+  <div class="wrapper profile-content__wrapper">
+    <div class="profile-content__main">
+      <% if @practitioner.long_bio.body.present? || @practitioner.short_tagline.present? %>
+        <section class="profile-about">
+          <h2 class="profile-about__title">About <%= @practitioner.full_name %></h2>
+          <% if @practitioner.short_tagline.present? %>
+            <p class="profile-about__tagline"><%= @practitioner.short_tagline %></p>
+          <% end %>
+          <% if @practitioner.long_bio.body.present? %>
+            <div class="profile-about__body trix-content"><%= @practitioner.long_bio %></div>
+          <% end %>
+        </section>
+      <% end %>
+
+      <% if @practitioner.specialties.any? %>
+        <section class="profile-focus">
+          <h2 class="profile-focus__title">Focus Areas &amp; Specialties</h2>
+          <ul class="profile-focus__list">
+            <% @practitioner.specialties.each do |specialty| %>
+              <li class="profile-focus__item"><%= specialty.name %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <% if @practitioner.treatments.any? %>
+        <section class="profile-services">
+          <h2 class="profile-services__title">Treatments Offered</h2>
+          <ul class="profile-services__list">
+            <% @practitioner.treatments.ordered.each do |treatment| %>
+              <li class="profile-service">
+                <div class="profile-service__body">
+                  <h3 class="profile-service__title"><%= treatment.title %></h3>
+                  <% if treatment.description.present? %>
+                    <p class="profile-service__description"><%= treatment.description %></p>
+                  <% end %>
+                  <% if treatment.duration_display %>
+                    <ul class="profile-service__meta">
+                      <li class="profile-service__meta-item profile-service__meta-item--duration"><%= treatment.duration_display %></li>
+                    </ul>
+                  <% end %>
+                </div>
+                <% if treatment.formatted_price %>
+                  <div class="profile-service__price"><%= treatment.formatted_price %></div>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <% if @practitioner.gallery_images.attached? %>
+        <section class="profile-meta-section">
+          <h2 class="profile-services__title">Gallery</h2>
+          <div class="gallery">
+            <% @practitioner.gallery_images.each do |img| %>
+              <%= image_tag img.variant(:preview), class: "gallery__img", alt: "" %>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+
+      <% if @practitioner.has_any_opening_hours? %>
+        <section class="profile-meta-section">
+          <h2 class="profile-services__title">Opening hours</h2>
+          <table class="hours-table">
+            <tbody>
+              <% Practitioner::DAYS_OF_WEEK.each do |day| %>
+                <% entry = @practitioner.opening_hours_for(day) %>
+                <tr>
+                  <td class="hours-table__day"><%= day_label(day) %></td>
+                  <td class="hours-table__time"><%= format_opening_hours(entry) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      <% end %>
+
+      <% if @practitioner.languages_list.any? %>
+        <section class="profile-meta-section">
+          <h2 class="profile-services__title">Languages spoken</h2>
+          <ul class="profile-focus__list">
+            <% @practitioner.languages_list.each do |lang| %>
+              <li class="profile-focus__item"><%= lang %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <% if @practitioner.qualifications_list.any? %>
+        <section class="profile-meta-section">
+          <h2 class="profile-services__title">Qualifications</h2>
+          <ul class="bulleted-list">
+            <% @practitioner.qualifications_list.each do |q| %>
+              <li><%= q %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <% if @practitioner.years_in_practice.present? %>
+        <section class="profile-meta-section">
+          <h2 class="profile-services__title">Experience</h2>
+          <p><strong><%= @practitioner.years_in_practice %></strong> <%= @practitioner.years_in_practice == 1 ? "year" : "years" %> in practice.</p>
+        </section>
+      <% end %>
+    </div>
+
+    <aside class="profile-location">
+      <h2 class="profile-location__title">Clinic Location</h2>
+
+      <% if @practitioner.coordinates? %>
+        <div class="profile-location__map-wrap"
+             data-controller="map"
+             data-map-latitude-value="<%= @practitioner.latitude %>"
+             data-map-longitude-value="<%= @practitioner.longitude %>"
+             data-map-has-coordinates-value="true"
+             data-map-draggable-value="false"
+             role="img"
+             aria-label="Map showing the clinic location">
+          <div class="profile-location__map" data-map-target="canvas"></div>
+        </div>
+      <% end %>
+
+      <% if full_address.present? %>
+        <div class="profile-location__address">
+          <% if clinic_name %>
+            <h3 class="profile-location__name"><%= clinic_name %></h3>
+          <% end %>
+          <p class="profile-location__street"><%= full_address %></p>
+        </div>
+        <% if phone_href %>
+          <%= link_to @practitioner.phone, phone_href, class: "profile-location__phone" %>
+        <% end %>
+        <% if directions_url %>
+          <%= link_to "Get directions →", directions_url,
+                      target: "_blank", rel: "noopener noreferrer",
+                      class: "profile-location__directions" %>
+        <% end %>
+      <% else %>
+        <p class="profile-location__street">Address not yet added.</p>
+      <% end %>
+    </aside>
+  </div>
+</div>

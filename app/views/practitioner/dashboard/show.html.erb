@@ -1,0 +1,76 @@
+<% content_for :title, "My dashboard" %>
+
+<section class="practitioner-hero">
+  <div class="practitioner-hero__avatar">
+    <% if @practitioner.profile_photo.attached? %>
+      <%= image_tag @practitioner.profile_photo.variant(:square), alt: @practitioner.full_name, class: "practitioner-hero__photo" %>
+    <% else %>
+      <div class="avatar-large"><%= avatar_initial(@practitioner) %></div>
+    <% end %>
+  </div>
+
+  <div class="practitioner-hero__body">
+    <p class="text-meta">Signed in as <%= Current.user.email_address %></p>
+    <h1 class="practitioner-hero__name"><%= @practitioner.full_name %></h1>
+    <p class="muted"><%= @practitioner.city %><%= " · #{@practitioner.bundesland}" if @practitioner.bundesland.present? %></p>
+
+    <div class="row mt-16" style="gap: 8px;">
+      <span class="badge <%= @practitioner.published? ? "badge--published" : "badge--unpublished" %>">
+        <%= @practitioner.published? ? "Visible on directory" : "Hidden from directory" %>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="completeness-card">
+  <div class="completeness-card__header">
+    <h2>Profile completeness</h2>
+    <span class="completeness-card__percent"><%= @practitioner.profile_completeness %>%</span>
+  </div>
+  <div class="completeness-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= @practitioner.profile_completeness %>">
+    <div class="completeness-bar__fill" style="width: <%= @practitioner.profile_completeness %>%"></div>
+  </div>
+  <% missing = @practitioner.missing_premium_fields %>
+  <% if missing.any? %>
+    <p class="text-meta mt-16">
+      Add the following to reach 100%: <strong><%= missing.to_sentence %></strong>.
+    </p>
+  <% else %>
+    <p class="text-meta mt-16">All premium fields are filled in. Nicely done.</p>
+  <% end %>
+</section>
+
+<section class="dashboard-tiles">
+  <%= link_to edit_practitioner_profile_path, class: "dashboard-tile" do %>
+    <span class="dashboard-tile__label">Edit profile</span>
+    <span class="dashboard-tile__hint">Update your details, photo, bio, opening hours, and more.</span>
+  <% end %>
+
+  <%= link_to practitioner_treatments_path, class: "dashboard-tile" do %>
+    <span class="dashboard-tile__label">Treatments (<%= @practitioner.treatments.count %>)</span>
+    <span class="dashboard-tile__hint">Manage the treatments you offer, with prices and durations.</span>
+  <% end %>
+
+  <% if @practitioner.published? %>
+    <%= link_to public_practitioner_path(@practitioner), class: "dashboard-tile", target: "_blank", rel: "noopener" do %>
+      <span class="dashboard-tile__label">View my public profile ↗</span>
+      <span class="dashboard-tile__hint">Opens the page visitors will see.</span>
+    <% end %>
+  <% end %>
+
+  <%= link_to practitioner_settings_path, class: "dashboard-tile" do %>
+    <span class="dashboard-tile__label">Settings</span>
+    <span class="dashboard-tile__hint">Change password, email, or delete your account.</span>
+  <% end %>
+</section>
+
+<section class="publish-toggle">
+  <h3>Directory visibility</h3>
+  <p class="text-meta">Toggle whether your listing appears on the public directory. An admin can override this.</p>
+  <% if @practitioner.published? %>
+    <%= button_to "Hide from directory", practitioner_unpublish_path, method: :patch, class: "btn btn--secondary",
+          data: { turbo_confirm: "Hide your profile from the public directory?" } %>
+  <% else %>
+    <%= button_to "Show on directory", practitioner_publish_path, method: :patch, class: "btn btn--primary" %>
+  <% end %>
+</section>

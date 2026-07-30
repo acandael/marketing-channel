@@ -1,0 +1,64 @@
+<% invitation = practitioner.latest_claim_invitation %>
+
+<section class="form-section invitation-panel"
+         data-controller="invite-dialog"
+         style="margin-bottom: 24px;">
+  <div class="invitation-panel__header">
+    <div>
+      <h2 class="form-section__title">Claim invitation</h2>
+      <p class="form-section__hint" style="margin-bottom: 0;">
+        <% if practitioner.claimed? %>
+          This profile was claimed <%= time_ago_in_words(practitioner.claimed_at) %> ago
+          <% if practitioner.user&.email_address.present? %>
+            by <strong><%= practitioner.user.email_address %></strong>
+          <% end %>.
+        <% elsif invitation.nil? %>
+          No invitation has been sent yet.
+        <% else %>
+          <% case invitation.status %>
+          <% when :pending %>
+            Invited <%= time_ago_in_words(invitation.sent_at) %> ago to
+            <strong><%= invitation.email_sent_to %></strong>. Expires <%= invitation.expires_at.to_date.strftime("%-d %B %Y") %>.
+          <% when :expired %>
+            Last invitation to <strong><%= invitation.email_sent_to %></strong> expired on <%= invitation.expires_at.to_date.strftime("%-d %B %Y") %>.
+          <% when :claimed %>
+            Claimed on <%= invitation.claimed_at.to_date.strftime("%-d %B %Y") %>.
+          <% end %>
+        <% end %>
+      </p>
+    </div>
+
+    <% unless practitioner.claimed? %>
+      <button type="button"
+              class="btn btn--secondary"
+              data-action="click->invite-dialog#open">
+        <%= invitation.nil? ? "Send invitation" : "Re-send invitation" %>
+      </button>
+    <% end %>
+  </div>
+
+  <% unless practitioner.claimed? %>
+    <dialog class="confirm-dialog" data-invite-dialog-target="dialog">
+      <%= form_with url: send_claim_invitation_admin_practitioner_path(practitioner),
+                    method: :post, local: true, class: "stack stack-md" do |f| %>
+        <h3 class="confirm-dialog__title">Send claim invitation</h3>
+        <p class="confirm-dialog__body">
+          We'll email a unique link that lets <%= practitioner.full_name %> claim this profile by setting a password. The link expires in 30 days.
+          <% unless invitation.nil? %>
+            Any previous invitation for this practitioner will be invalidated.
+          <% end %>
+        </p>
+        <div class="form-field">
+          <%= label_tag :email, "Send to", class: "form-field__label" %>
+          <%= email_field_tag :email, practitioner.public_email,
+                required: true, class: "form-field__input",
+                data: { invite_dialog_target: "email" } %>
+        </div>
+        <div class="confirm-dialog__actions">
+          <button type="button" class="btn btn--ghost" data-action="click->invite-dialog#close">Cancel</button>
+          <%= f.submit "Send invitation", class: "btn btn--primary" %>
+        </div>
+      <% end %>
+    </dialog>
+  <% end %>
+</section>

@@ -1,0 +1,46 @@
+<%
+  first_specialty = practitioner.specialties.first&.name
+  bio_excerpt = if practitioner.short_tagline.present?
+    truncate(practitioner.short_tagline, length: 160)
+  elsif practitioner.long_bio.body.present?
+    truncate(practitioner.long_bio.to_plain_text.squish, length: 160)
+  end
+%>
+<article class="featured__card">
+  <header class="featured__header">
+    <% if practitioner.profile_photo.attached? %>
+      <%= image_tag practitioner.profile_photo.variant(:thumb),
+                    alt: "", class: "featured__card-image" %>
+    <% else %>
+      <div class="featured__card-image-placeholder" aria-hidden="true">
+        <%= avatar_initial(practitioner) %>
+      </div>
+    <% end %>
+    <h3 class="featured__card-title">
+      <%= link_to display_name(practitioner), public_practitioner_path(practitioner) %>
+    </h3>
+    <% if first_specialty %>
+      <p class="featured__card-subtitle"><%= first_specialty %></p>
+    <% end %>
+  </header>
+
+  <% if bio_excerpt.present? %>
+    <p class="featured__card-content"><%= bio_excerpt %></p>
+  <% end %>
+
+  <% if practitioner.specialties.any? %>
+    <div class="featured__card-labels">
+      <% practitioner.specialties.first(3).each do |s| %>
+        <span class="featured__card-label"><%= s.name %></span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <footer class="featured__card-footer">
+    <% if practitioner.city.present? %>
+      <p class="featured__card-footer-text"><%= practitioner.city %></p>
+    <% end %>
+    <%= link_to "View Profile", public_practitioner_path(practitioner),
+                class: "featured__card-footer-link" %>
+  </footer>
+</article>

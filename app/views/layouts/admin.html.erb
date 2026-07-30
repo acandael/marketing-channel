@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= [content_for(:title), "Admin", "Marketing Channel"].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="">
+    <%= stylesheet_link_tag "application", "actiontext", "data-turbo-track": "reload" %>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <%= link_to admin_root_path, class: "admin-sidebar__brand" do %>
+          Marketing Channel
+          <small>Admin</small>
+        <% end %>
+
+        <nav class="admin-sidebar__nav" aria-label="Admin navigation">
+          <%= sidebar_link "Dashboard",     admin_root_path,        active_when: controller_path == "admin/dashboard" %>
+          <%= sidebar_link "Practitioners", admin_practitioners_path, active_when: controller_path == "admin/practitioners" %>
+          <%= sidebar_link "Specialties",   admin_specialties_path, active_when: controller_path == "admin/specialties" %>
+        </nav>
+
+        <div class="admin-sidebar__footer">
+          Signed in as<br>
+          <strong><%= current_admin&.email_address %></strong>
+          <%= button_to "Sign out", session_path, method: :delete, class: "btn btn--secondary btn--sm" %>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <%= render "shared/flash" %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

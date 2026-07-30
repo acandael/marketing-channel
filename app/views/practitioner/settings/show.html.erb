@@ -1,0 +1,62 @@
+<% content_for :title, "Settings" %>
+
+<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+
+<header class="page-header">
+  <h1 class="page-header__title">Settings</h1>
+</header>
+
+<section class="form-section settings-card">
+  <h2 class="form-section__title">Change password</h2>
+  <p class="form-section__hint">You'll stay signed in on this device.</p>
+
+  <%= form_with url: practitioner_settings_path, method: :patch, class: "form", local: true do |f| %>
+    <%= hidden_field_tag :section, "password" %>
+    <div class="form-field">
+      <%= label_tag :current_password, class: "form-field__label" %>
+      <%= password_field_tag :current_password, nil, required: true, autocomplete: "current-password", class: "form-field__input" %>
+    </div>
+    <div class="form-field">
+      <%= label_tag :new_password, "New password", class: "form-field__label" %>
+      <%= password_field_tag :new_password, nil, required: true, minlength: 8, autocomplete: "new-password", class: "form-field__input" %>
+      <span class="form-field__hint">At least 8 characters.</span>
+    </div>
+    <div class="form-field">
+      <%= label_tag :new_password_confirmation, "Confirm new password", class: "form-field__label" %>
+      <%= password_field_tag :new_password_confirmation, nil, required: true, minlength: 8, autocomplete: "new-password", class: "form-field__input" %>
+    </div>
+    <%= f.submit "Update password", class: "btn btn--primary" %>
+  <% end %>
+</section>
+
+<section class="form-section settings-card">
+  <h2 class="form-section__title">Change email</h2>
+  <p class="form-section__hint">
+    Your current sign-in email is <strong><%= Current.user.email_address %></strong>.
+    <% if Current.user.pending_email_address.present? && !Current.user.email_change_expired? %>
+      A confirmation was sent to <strong><%= Current.user.pending_email_address %></strong> — check that inbox to complete the change.
+    <% end %>
+  </p>
+
+  <%= form_with url: practitioner_settings_path, method: :patch, class: "form", local: true do |f| %>
+    <%= hidden_field_tag :section, "email" %>
+    <div class="form-field">
+      <%= label_tag :new_email_address, "New email", class: "form-field__label" %>
+      <%= email_field_tag :new_email_address, nil, required: true, autocomplete: "email", class: "form-field__input" %>
+      <span class="form-field__hint">We'll send a confirmation link to this address. Nothing changes until you click it.</span>
+    </div>
+    <%= f.submit "Send confirmation link", class: "btn btn--secondary" %>
+  <% end %>
+</section>
+
+<section class="form-section danger-zone">
+  <h2 class="form-section__title">Delete account</h2>
+  <p class="form-section__hint">
+    Deletes your login. Your practitioner profile becomes unclaimed and stays visible on the directory until an admin removes it. An admin will be notified.
+    You can be re-invited later if you change your mind.
+  </p>
+
+  <%= button_to "Delete my account", practitioner_account_path,
+        method: :delete, class: "btn btn--danger",
+        data: { turbo_confirm: "Delete your account? This can't be undone." } %>
+</section>

@@ -1,0 +1,50 @@
+<% content_for :title, "Claim your profile" %>
+
+<div class="claim-shell">
+  <div class="claim-card">
+    <h1>Claim your profile</h1>
+    <p class="muted">Set a password to take ownership of this listing on Marketing Channel.</p>
+
+    <section class="claim-preview">
+      <div class="claim-preview__avatar" aria-hidden="true">
+        <%= avatar_initial(@invitation.practitioner) %>
+      </div>
+      <div>
+        <p class="claim-preview__label">You are claiming</p>
+        <h2 class="claim-preview__name"><%= @invitation.practitioner.full_name %></h2>
+        <p class="muted"><%= @invitation.practitioner.city %></p>
+        <% if @invitation.practitioner.specialties.any? %>
+          <div class="row mt-16" style="gap: 4px;">
+            <% @invitation.practitioner.specialties.first(3).each do |s| %>
+              <span class="chip"><%= s.name %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <% if @error.present? %>
+      <div class="flash flash--alert"><%= @error %></div>
+    <% end %>
+
+    <%= form_with url: claim_path(token: @invitation.unique_token), method: :post, class: "form" do |f| %>
+      <div class="form-field">
+        <%= f.label :email, "Your email", class: "form-field__label" %>
+        <%= f.email_field :email,
+              value: @submitted_email || @invitation.email_sent_to,
+              required: true, autocomplete: "username", class: "form-field__input" %>
+        <span class="form-field__hint">This becomes your sign-in email. You can change it later.</span>
+      </div>
+      <div class="form-field">
+        <%= f.label :password, "Choose a password", class: "form-field__label" %>
+        <%= f.password_field :password, required: true, autocomplete: "new-password", minlength: 8, maxlength: 72, class: "form-field__input" %>
+        <span class="form-field__hint">At least 8 characters.</span>
+      </div>
+      <%= f.submit "Claim my profile", class: "btn btn--primary" %>
+    <% end %>
+
+    <p class="muted text-sm mt-16">
+      Link expires <%= @invitation.expires_at.to_date.strftime("%-d %B %Y") %>.
+    </p>
+  </div>
+</div>

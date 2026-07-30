@@ -1,0 +1,15 @@
+<% content_for :title, title %>
+
+<div class="claim-shell">
+  <div class="claim-card claim-card--error">
+    <h1><%= title %></h1>
+    <p class="muted"><%= body %></p>
+
+    <div class="row mt-16">
+      <% if local_assigns[:show_sign_in] %>
+        <%= link_to "Sign in", new_session_path, class: "btn btn--primary" %>
+      <% end %>
+      <%= link_to "Back to the directory", root_path, class: "btn btn--secondary" %>
+    </div>
+  </div>
+</div>

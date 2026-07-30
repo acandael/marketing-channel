@@ -1,0 +1,83 @@
+<section class="form-section">
+  <h2 class="form-section__title">Basic info</h2>
+  <p class="form-section__hint">Everything a visitor needs to identify and contact you.</p>
+
+  <div class="form-grid">
+    <div class="form-field">
+      <%= f.label :salutation, class: "form-field__label" %>
+      <%= f.select :salutation, [["—", ""]] + Practitioner::SALUTATIONS.map { |s| [s, s] }, {}, class: "form-field__select" %>
+    </div>
+    <div class="form-field">
+      <%= f.label :full_name, class: "form-field__label" %>
+      <%= f.text_field :full_name, class: "form-field__input", required: true %>
+    </div>
+
+    <div class="form-field form-field--full">
+      <span class="form-field__label">Specialties</span>
+      <div class="form-field__checkbox-list">
+        <% @specialties.each do |specialty| %>
+          <label>
+            <%= check_box_tag "practitioner[specialty_ids][]", specialty.id, @practitioner.specialty_ids.include?(specialty.id) %>
+            <%= specialty.name %>
+          </label>
+        <% end %>
+      </div>
+      <%= hidden_field_tag "practitioner[specialty_ids][]", "" %>
+      <span class="form-field__hint">Specialties are managed by the admin team. Contact them if you need one added.</span>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :phone, class: "form-field__label" %>
+      <%= f.text_field :phone, class: "form-field__input" %>
+    </div>
+    <div class="form-field">
+      <%= f.label :public_email, "Public email", class: "form-field__label" %>
+      <%= f.email_field :public_email, class: "form-field__input" %>
+      <span class="form-field__hint">Shown on your public profile — distinct from your login email.</span>
+    </div>
+    <div class="form-field form-field--full">
+      <%= f.label :website_url, "Website", class: "form-field__label" %>
+      <%= f.url_field :website_url, class: "form-field__input", placeholder: "https://…" %>
+    </div>
+
+    <div class="form-field form-field--full">
+      <%= f.label :street_address, "Street & house number", class: "form-field__label" %>
+      <%= f.text_field :street_address, class: "form-field__input" %>
+      <span class="form-field__hint">Changing your address re-runs geocoding on save.</span>
+    </div>
+    <div class="form-field">
+      <%= f.label :postal_code, "Postal code (PLZ)", class: "form-field__label" %>
+      <%= f.text_field :postal_code, class: "form-field__input", pattern: "\\d{5}", inputmode: "numeric" %>
+    </div>
+    <div class="form-field">
+      <%= f.label :city, class: "form-field__label" %>
+      <%= f.text_field :city, class: "form-field__input", required: true %>
+    </div>
+    <div class="form-field form-field--full">
+      <%= f.label :bundesland, class: "form-field__label" %>
+      <%= f.select :bundesland, [["—", ""]] + Practitioner::BUNDESLAENDER.map { |b| [b, b] }, {}, class: "form-field__select" %>
+    </div>
+
+    <div class="form-field form-field--full">
+      <div class="map-preview"
+           data-controller="map"
+           data-map-latitude-value="<%= @practitioner.latitude || 51.1657 %>"
+           data-map-longitude-value="<%= @practitioner.longitude || 10.4515 %>"
+           data-map-has-coordinates-value="<%= @practitioner.coordinates? %>">
+        <div class="map-preview__canvas" data-map-target="canvas"></div>
+        <p class="map-preview__hint">Address is geocoded on save. Drag the pin to fine-tune the location.</p>
+        <p class="map-preview__coords">
+          <span data-map-target="coords">
+            <% if @practitioner.coordinates? %>
+              Lat <%= @practitioner.latitude.to_f.round(6) %>, Lng <%= @practitioner.longitude.to_f.round(6) %>
+            <% else %>
+              No coordinates yet — save to geocode, or click on the map to drop a pin.
+            <% end %>
+          </span>
+        </p>
+        <%= f.hidden_field :latitude,  data: { map_target: "latitudeField" } %>
+        <%= f.hidden_field :longitude, data: { map_target: "longitudeField" } %>
+      </div>
+    </div>
+  </div>
+</section>

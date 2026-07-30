@@ -1,0 +1,46 @@
+<% content_for :title, "Specialties" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Specialties</h1>
+    <p class="page-header__subtitle">The taxonomy of practices used to filter the directory.</p>
+  </div>
+  <%= link_to "New specialty", new_admin_specialty_path, class: "btn btn--primary" %>
+</header>
+
+<section class="table-card">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Description</th>
+        <th>In use</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @specialties.any? %>
+        <% @specialties.each do |specialty| %>
+          <tr>
+            <td><strong><%= specialty.name %></strong></td>
+            <td><code class="text-sm muted"><%= specialty.slug %></code></td>
+            <td class="text-meta"><%= truncate(specialty.description.to_s, length: 80) %></td>
+            <td class="text-meta"><%= pluralize(specialty.usage_count, "practitioner") %></td>
+            <td class="table__actions">
+              <%= link_to "Edit", edit_admin_specialty_path(specialty), class: "btn btn--ghost btn--sm" %>
+              <%= button_to "Delete",
+                    admin_specialty_path(specialty),
+                    method: :delete,
+                    class: "btn btn--danger btn--sm",
+                    form: { style: "display:inline-block" },
+                    data: { turbo_confirm: "Delete “#{specialty.name}”?" } %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="5" class="table__empty">No specialties yet. <%= link_to "Create the first", new_admin_specialty_path %>.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

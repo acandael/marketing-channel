@@ -1,0 +1,39 @@
+<tr>
+  <td class="table__checkbox">
+    <%= check_box_tag "practitioner_ids[]", practitioner.id, false,
+          data: { action: "change->bulk-actions#toggle", bulk_actions_target: "checkbox" },
+          aria: { label: "Select #{practitioner.full_name}" } %>
+  </td>
+  <td>
+    <%= link_to practitioner.full_name, edit_admin_practitioner_path(practitioner) %>
+    <% if practitioner.salutation.present? %>
+      <div class="text-meta"><%= practitioner.salutation %></div>
+    <% end %>
+  </td>
+  <td>
+    <%= practitioner.city %>
+    <% if practitioner.postal_code.present? %>
+      <div class="text-meta"><%= practitioner.postal_code %></div>
+    <% end %>
+  </td>
+  <td>
+    <div class="row" style="gap: 4px;">
+      <% practitioner.specialties.first(3).each do |s| %>
+        <span class="chip"><%= s.name %></span>
+      <% end %>
+      <% if practitioner.specialties.size > 3 %>
+        <span class="text-meta">+<%= practitioner.specialties.size - 3 %></span>
+      <% end %>
+    </div>
+  </td>
+  <td><%= status_badges_for(practitioner) %></td>
+  <td><%= invitation_status_chip(practitioner) %></td>
+  <td class="text-meta"><%= time_ago_in_words(practitioner.updated_at) %> ago</td>
+  <td class="table__actions">
+    <%= link_to "Edit", edit_admin_practitioner_path(practitioner), class: "btn btn--ghost btn--sm" %>
+    <%= button_to "Delete", admin_practitioner_path(practitioner), method: :delete,
+          class: "btn btn--danger btn--sm",
+          form: { style: "display:inline-block" },
+          data: { turbo_confirm: "Delete #{practitioner.full_name}?" } %>
+  </td>
+</tr>

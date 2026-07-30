@@ -1,0 +1,47 @@
+<% content_for :title, "Treatments" %>
+
+<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Treatments</h1>
+    <p class="page-header__subtitle">Your treatment menu — what visitors see under "Treatments Offered" on your public profile.</p>
+  </div>
+  <%= link_to "Add treatment", new_practitioner_treatment_path, class: "btn btn--primary" %>
+</header>
+
+<% if @treatments.any? %>
+  <ul class="treatment-list">
+    <% @treatments.each do |t| %>
+      <li class="treatment-list__item">
+        <div class="treatment-list__body">
+          <h3 class="treatment-list__title"><%= t.title %></h3>
+          <% if t.description.present? %>
+            <p class="treatment-list__description"><%= t.description %></p>
+          <% end %>
+          <% if t.duration_display %>
+            <p class="treatment-list__meta"><%= t.duration_display %></p>
+          <% end %>
+        </div>
+        <div class="treatment-list__price-col">
+          <% if t.formatted_price %>
+            <div class="treatment-list__price"><%= t.formatted_price %></div>
+          <% end %>
+          <div class="treatment-list__actions">
+            <%= link_to "Edit", edit_practitioner_treatment_path(t), class: "btn btn--ghost btn--sm" %>
+            <%= button_to "Delete", practitioner_treatment_path(t), method: :delete,
+                  class: "btn btn--danger btn--sm",
+                  form: { style: "display:inline-block" },
+                  data: { turbo_confirm: "Delete “#{t.title}”?" } %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="empty-state">
+    <h3>No treatments yet</h3>
+    <p class="muted">Add your first treatment to show it on your public profile.</p>
+    <p class="mt-16"><%= link_to "Add your first treatment", new_practitioner_treatment_path, class: "btn btn--primary" %></p>
+  </div>
+<% end %>
