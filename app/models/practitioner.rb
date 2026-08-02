@@ -182,6 +182,14 @@ class Practitioner < ApplicationRecord
     latitude.present? && longitude.present?
   end
 
+  def ordered_gallery_attachments
+    attachments = gallery_images.attachments.to_a
+    by_id = attachments.index_by(&:id)
+    ordered_ids = Array(gallery_order).map(&:to_i)
+    ordered = ordered_ids.filter_map { |id| by_id.delete(id) }
+    ordered + by_id.values
+  end
+
   private
 
   def assign_slug

@@ -31,6 +31,11 @@ Rails.application.routes.draw do
     resource  :settings,  only: [:show, :update]
     resource  :account,   only: [:destroy]
     resources :treatments
+    resources :gallery_images, only: [:index, :create, :destroy] do
+      collection do
+        patch :reorder
+      end
+    end
     patch "/publish"   => "profiles#publish",   as: "publish"
     patch "/unpublish" => "profiles#unpublish", as: "unpublish"
   end

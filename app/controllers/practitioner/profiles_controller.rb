@@ -33,7 +33,6 @@ class Practitioner::ProfilesController < Practitioner::BaseController
       :short_tagline, :long_bio, :qualifications,
       :profile_photo,
       specialty_ids: [],
-      gallery_images: [],
       opening_hours: opening_hours_permit
     )
   end

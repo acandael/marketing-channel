@@ -13,7 +13,7 @@
   <%= form_with url: practitioner_settings_path, method: :patch, class: "form", local: true do |f| %>
     <%= hidden_field_tag :section, "password" %>
     <div class="form-field">
-      <%= label_tag :current_password, class: "form-field__label" %>
+      <%= label_tag :current_password, "Current password", class: "form-field__label" %>
       <%= password_field_tag :current_password, nil, required: true, autocomplete: "current-password", class: "form-field__input" %>
     </div>
     <div class="form-field">

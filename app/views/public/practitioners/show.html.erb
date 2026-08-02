@@ -128,8 +128,8 @@
         <section class="profile-meta-section">
           <h2 class="profile-services__title">Gallery</h2>
           <div class="gallery">
-            <% @practitioner.gallery_images.each do |img| %>
-              <%= image_tag img.variant(:preview), class: "gallery__img", alt: "" %>
+            <% @practitioner.ordered_gallery_attachments.each do |att| %>
+              <%= image_tag att.variant(:preview), class: "gallery__img", alt: "" %>
             <% end %>
           </div>
         </section>
