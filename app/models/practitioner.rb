@@ -24,7 +24,7 @@ class Practitioner < ApplicationRecord
 
   PREMIUM_FIELDS = %i[
     profile_photo short_tagline long_bio treatments opening_hours
-    qualifications years_in_practice gallery_images
+    qualifications gallery_images
   ].freeze
 
   belongs_to :user, optional: true
@@ -63,7 +63,6 @@ class Practitioner < ApplicationRecord
   validates :postal_code, format: { with: /\A\d{5}\z/, allow_blank: true, message: "must be a 5-digit German PLZ" }
   validates :public_email, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
   validates :short_tagline, length: { maximum: 140, allow_blank: true }
-  validates :years_in_practice, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100, allow_nil: true }
   validate :validate_profile_photo
   validate :validate_gallery_images
 
@@ -148,9 +147,8 @@ class Practitioner < ApplicationRecord
     filled += 1 if treatments.any?
     filled += 1 if has_any_opening_hours?
     filled += 1 if qualifications_list.any?
-    filled += 1 if years_in_practice.present?
     filled += 1 if gallery_images.attached?
-    ((filled.to_f / 8) * 100).round
+    ((filled.to_f / 7) * 100).round
   end
 
   def missing_premium_fields
@@ -161,7 +159,6 @@ class Practitioner < ApplicationRecord
     missing << "treatments"       if treatments.empty?
     missing << "opening hours"    unless has_any_opening_hours?
     missing << "qualifications"   if qualifications_list.empty?
-    missing << "years in practice" if years_in_practice.blank?
     missing << "gallery images"   unless gallery_images.attached?
     missing
   end

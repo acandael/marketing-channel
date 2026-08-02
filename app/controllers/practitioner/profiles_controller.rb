@@ -31,7 +31,7 @@ class Practitioner::ProfilesController < Practitioner::BaseController
       :salutation, :full_name, :street_address, :postal_code, :city, :bundesland,
       :phone, :public_email, :website_url, :latitude, :longitude,
       :short_tagline, :long_bio, :qualifications,
-      :years_in_practice, :profile_photo,
+      :profile_photo,
       specialty_ids: [],
       gallery_images: [],
       opening_hours: opening_hours_permit

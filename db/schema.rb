@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_02_094600) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_02_124009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -97,7 +97,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_02_094600) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.string "website_url"
-    t.integer "years_in_practice"
     t.index ["city"], name: "index_practitioners_on_city"
     t.index ["latitude", "longitude"], name: "index_practitioners_on_latitude_and_longitude"
     t.index ["postal_code"], name: "index_practitioners_on_postal_code"

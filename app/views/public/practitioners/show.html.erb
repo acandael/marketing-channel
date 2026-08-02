@@ -163,12 +163,6 @@
         </section>
       <% end %>
 
-      <% if @practitioner.years_in_practice.present? %>
-        <section class="profile-meta-section">
-          <h2 class="profile-services__title">Experience</h2>
-          <p><strong><%= @practitioner.years_in_practice %></strong> <%= @practitioner.years_in_practice == 1 ? "year" : "years" %> in practice.</p>
-        </section>
-      <% end %>
     </div>
 
     <aside class="profile-location">
