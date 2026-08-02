@@ -1,0 +1,68 @@
+<% content_for :title, "Specialty & focus areas" %>
+
+<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Specialty &amp; focus areas</h1>
+    <p class="page-header__subtitle">
+      Pick the main specialty that describes your practice, plus any focus areas that make your work distinct.
+    </p>
+  </div>
+</header>
+
+<%= form_with model: @practitioner, url: practitioner_specialty_path, method: :patch, class: "form" do |f| %>
+  <% if @practitioner.errors.any? %>
+    <div class="flash flash--alert">
+      <strong><%= pluralize(@practitioner.errors.count, "error") %> prevented this from being saved:</strong>
+      <ul style="margin-top: 8px; margin-left: 20px;"><% @practitioner.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+    </div>
+  <% end %>
+
+  <section class="form-section">
+    <h2 class="form-section__title">Specialty</h2>
+    <div class="form-grid">
+      <div class="form-field form-field--full">
+        <%= f.label :specialty_id, "Main specialty", class: "form-field__label" %>
+        <%= f.select :specialty_id,
+              options_from_collection_for_select(@specialties, :id, :name, @practitioner.specialty_id),
+              { include_blank: "— Choose one —" },
+              class: "form-field__input" %>
+        <span class="form-field__hint">You can only choose one. Missing an option? Ask an admin to add it.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section"
+           data-controller="tag-input"
+           data-tag-input-name-value="practitioner[focus_area_names][]">
+    <h2 class="form-section__title">Focus areas</h2>
+    <p class="form-section__hint">Add specific areas you focus on — press Enter or comma to add. Suggestions come from other practitioners' focus areas.</p>
+
+    <div class="tag-input" data-tag-input-target="container">
+      <% @practitioner.focus_areas.alphabetical.each do |fa| %>
+        <span class="tag-input__tag" data-tag-input-target="tag">
+          <%= fa.name %>
+          <button type="button" class="tag-input__remove" data-action="tag-input#remove" aria-label="Remove <%= fa.name %>">×</button>
+          <input type="hidden" name="practitioner[focus_area_names][]" value="<%= fa.name %>">
+        </span>
+      <% end %>
+      <input type="text"
+             class="tag-input__field"
+             list="focus-area-suggestions"
+             placeholder="Type a focus area…"
+             data-tag-input-target="field"
+             data-action="keydown->tag-input#keydown blur->tag-input#commit">
+    </div>
+
+    <datalist id="focus-area-suggestions">
+      <% @suggested_focus_areas.each do |fa| %>
+        <option value="<%= fa.name %>">
+      <% end %>
+    </datalist>
+  </section>
+
+  <div class="form-actions">
+    <%= f.submit "Save", class: "btn btn--primary" %>
+  </div>
+<% end %>

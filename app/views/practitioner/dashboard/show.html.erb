@@ -56,6 +56,11 @@
     <span class="dashboard-tile__hint">Add or remove photos shown on your public profile.</span>
   <% end %>
 
+  <%= link_to edit_practitioner_specialty_path, class: "dashboard-tile" do %>
+    <span class="dashboard-tile__label">Specialty &amp; focus areas (<%= @practitioner.focus_areas.count %>)</span>
+    <span class="dashboard-tile__hint">Set your main specialty and list the areas you focus on.</span>
+  <% end %>
+
   <% if @practitioner.published? %>
     <%= link_to public_practitioner_path(@practitioner), class: "dashboard-tile", target: "_blank", rel: "noopener" do %>
       <span class="dashboard-tile__label">View my public profile ↗</span>

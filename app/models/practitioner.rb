@@ -28,8 +28,9 @@ class Practitioner < ApplicationRecord
   ].freeze
 
   belongs_to :user, optional: true
-  has_many :practitioner_specialties, dependent: :destroy
-  has_many :specialties, through: :practitioner_specialties
+  belongs_to :specialty, optional: true
+  has_many :practitioner_focus_areas, dependent: :destroy
+  has_many :focus_areas, through: :practitioner_focus_areas
   has_many :claim_invitations, dependent: :destroy
   has_one  :latest_claim_invitation, -> { order(sent_at: :desc) }, class_name: "ClaimInvitation"
   has_many :treatments, dependent: :destroy
@@ -72,7 +73,7 @@ class Practitioner < ApplicationRecord
   scope :unclaimed,   -> { where(claimed_at: nil) }
   scope :by_name,     ->(q) { where("full_name ILIKE ?", "%#{sanitize_sql_like(q)}%") if q.present? }
   scope :by_city,     ->(c) { where(city: c) if c.present? }
-  scope :with_specialty, ->(id) { joins(:practitioner_specialties).where(practitioner_specialties: { specialty_id: id }) if id.present? }
+  scope :with_specialty, ->(id) { where(specialty_id: id) if id.present? }
   scope :by_location, ->(q) {
     next all if q.blank?
     query = q.to_s.strip
@@ -86,9 +87,12 @@ class Practitioner < ApplicationRecord
     next all if q.blank?
     query = "%#{sanitize_sql_like(q.to_s.strip)}%"
     matching_ids = unscoped
-      .left_joins(:specialties)
+      .left_joins(:specialty, :focus_areas)
       .where(
-        "practitioners.full_name ILIKE :q OR specialties.name ILIKE :q OR specialties.search_aliases ILIKE :q",
+        "practitioners.full_name ILIKE :q " \
+        "OR specialties.name ILIKE :q " \
+        "OR specialties.search_aliases ILIKE :q " \
+        "OR focus_areas.name ILIKE :q",
         q: query
       )
       .select("practitioners.id")
@@ -180,6 +184,25 @@ class Practitioner < ApplicationRecord
 
   def coordinates?
     latitude.present? && longitude.present?
+  end
+
+  def self.normalize_name(value)
+    return "" if value.blank?
+    stripped = value.to_s.dup
+    SALUTATIONS.each { |s| stripped.sub!(/\A#{Regexp.escape(s)}\s+/i, "") }
+    I18n.transliterate(stripped).downcase.strip.squeeze(" ")
+  end
+
+  def self.find_potential_match(full_name, city)
+    return nil if full_name.blank? || city.blank?
+    normalized_name = normalize_name(full_name)
+    normalized_city = I18n.transliterate(city.to_s).downcase.strip
+    return nil if normalized_name.blank? || normalized_city.blank?
+
+    find_each.find do |p|
+      normalize_name(p.full_name) == normalized_name &&
+        I18n.transliterate(p.city.to_s).downcase.strip == normalized_city
+    end
   end
 
   def ordered_gallery_attachments

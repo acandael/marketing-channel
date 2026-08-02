@@ -18,11 +18,8 @@
   </td>
   <td>
     <div class="row" style="gap: 4px;">
-      <% practitioner.specialties.first(3).each do |s| %>
-        <span class="chip"><%= s.name %></span>
-      <% end %>
-      <% if practitioner.specialties.size > 3 %>
-        <span class="text-meta">+<%= practitioner.specialties.size - 3 %></span>
+      <% if practitioner.specialty %>
+        <span class="chip"><%= practitioner.specialty.name %></span>
       <% end %>
     </div>
   </td>

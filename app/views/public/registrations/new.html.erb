@@ -1,0 +1,82 @@
+<% content_for :title, "List your practice" %>
+
+<div class="claim-shell">
+  <div class="claim-card">
+    <h1>List your practice</h1>
+    <p class="muted">
+      Tell us who you are and where you practice. We'll email you a link to set your password and finish setting up your profile.
+    </p>
+
+    <%= form_with url: registrations_path, method: :post, scope: :registration, class: "form" do |f| %>
+      <div class="form-section">
+        <h2 class="form-section__title">Your account</h2>
+        <div class="form-grid">
+          <div class="form-field form-field--full">
+            <%= f.label :email, "Email", class: "form-field__label" %>
+            <%= f.email_field :email, value: @form[:email], required: true,
+                              autocomplete: "email", class: "form-field__input" %>
+            <span class="form-field__hint">We'll send your verification link here.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-section__title">Your practice</h2>
+        <div class="form-grid">
+          <div class="form-field form-field--full">
+            <%= f.label :full_name, "Full name", class: "form-field__label" %>
+            <%= f.text_field :full_name, value: @form[:full_name], required: true,
+                             class: "form-field__input" %>
+          </div>
+          <div class="form-field form-field--full">
+            <%= f.label :street_address, "Street + number", class: "form-field__label" %>
+            <%= f.text_field :street_address, value: @form[:street_address],
+                             class: "form-field__input" %>
+          </div>
+          <div class="form-field">
+            <%= f.label :postal_code, "Postal code", class: "form-field__label" %>
+            <%= f.text_field :postal_code, value: @form[:postal_code],
+                             class: "form-field__input", pattern: "\\d{5}",
+                             placeholder: "5 digits" %>
+          </div>
+          <div class="form-field">
+            <%= f.label :city, "City", class: "form-field__label" %>
+            <%= f.text_field :city, value: @form[:city], required: true,
+                             class: "form-field__input" %>
+          </div>
+          <div class="form-field">
+            <%= f.label :phone, "Phone", class: "form-field__label" %>
+            <%= f.text_field :phone, value: @form[:phone], class: "form-field__input" %>
+          </div>
+          <div class="form-field">
+            <%= f.label :public_email, "Public contact email", class: "form-field__label" %>
+            <%= f.email_field :public_email, value: @form[:public_email],
+                              class: "form-field__input" %>
+            <span class="form-field__hint">Shown on your profile. Leave blank to hide.</span>
+          </div>
+          <div class="form-field form-field--full">
+            <%= f.label :short_tagline, "Short tagline", class: "form-field__label" %>
+            <%= f.text_field :short_tagline, value: @form[:short_tagline], maxlength: 140,
+                             class: "form-field__input" %>
+          </div>
+          <div class="form-field form-field--full">
+            <%= label_tag "registration_specialty_id", "Specialty", class: "form-field__label" %>
+            <%= select_tag "registration[specialty_id]",
+                  options_from_collection_for_select(@specialties, :id, :name, @form[:specialty_id]),
+                  include_blank: "— Choose one —",
+                  class: "form-field__select" %>
+            <span class="form-field__hint">You can add focus areas later from your dashboard.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Send verification email", class: "btn btn--primary" %>
+      </div>
+
+      <p class="muted text-sm mt-16">
+        New listings are reviewed by an admin before going live on the directory.
+      </p>
+    <% end %>
+  </div>
+</div>

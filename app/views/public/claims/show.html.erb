@@ -13,11 +13,9 @@
         <p class="claim-preview__label">You are claiming</p>
         <h2 class="claim-preview__name"><%= @invitation.practitioner.full_name %></h2>
         <p class="muted"><%= @invitation.practitioner.city %></p>
-        <% if @invitation.practitioner.specialties.any? %>
+        <% if @invitation.practitioner.specialty %>
           <div class="row mt-16" style="gap: 4px;">
-            <% @invitation.practitioner.specialties.first(3).each do |s| %>
-              <span class="chip"><%= s.name %></span>
-            <% end %>
+            <span class="chip"><%= @invitation.practitioner.specialty.name %></span>
           </div>
         <% end %>
       </div>

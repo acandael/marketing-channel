@@ -39,6 +39,7 @@
               <li><%= link_to "Dashboard", practitioner_root_path, class: "topnav__link" %></li>
               <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
             <% else %>
+              <li><%= link_to "List your practice", new_registration_path, class: "topnav__link" %></li>
               <li><%= link_to "Sign in", new_session_path, class: "topnav__link topnav__link--pill" %></li>
             <% end %>
           </ul>

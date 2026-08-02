@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     resources :specialties
+    resources :focus_areas
     resources :practitioners do
       collection do
         patch  :bulk_publish
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get  "/list-your-practice", to: "public/registrations#new",    as: :new_registration
+  post "/list-your-practice", to: "public/registrations#create", as: :registrations
 
   get "/practitioners/:slug",
       to: "public/practitioners#show",
@@ -36,6 +40,7 @@ Rails.application.routes.draw do
         patch :reorder
       end
     end
+    resource :specialty, only: [:edit, :update], controller: "specialty"
     patch "/publish"   => "profiles#publish",   as: "publish"
     patch "/unpublish" => "profiles#unpublish", as: "unpublish"
   end

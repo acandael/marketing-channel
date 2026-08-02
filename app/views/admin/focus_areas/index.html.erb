@@ -1,0 +1,44 @@
+<% content_for :title, "Focus areas" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Focus areas</h1>
+    <p class="page-header__subtitle">Practitioners can add their own. Curate the shared list here — rename or delete duplicates as needed.</p>
+  </div>
+  <%= link_to "New focus area", new_admin_focus_area_path, class: "btn btn--primary" %>
+</header>
+
+<section class="table-card">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>In use</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @focus_areas.any? %>
+        <% @focus_areas.each do |fa| %>
+          <tr>
+            <td><strong><%= fa.name %></strong></td>
+            <td><code class="text-sm muted"><%= fa.slug %></code></td>
+            <td class="text-meta"><%= pluralize(fa.usage_count, "practitioner") %></td>
+            <td class="table__actions">
+              <%= link_to "Edit", edit_admin_focus_area_path(fa), class: "btn btn--ghost btn--sm" %>
+              <%= button_to "Delete",
+                    admin_focus_area_path(fa),
+                    method: :delete,
+                    class: "btn btn--danger btn--sm",
+                    form: { style: "display:inline-block" },
+                    data: { turbo_confirm: "Delete “#{fa.name}”?" } %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="4" class="table__empty">No focus areas yet. Practitioners will populate this list as they self-serve, or <%= link_to "create one now", new_admin_focus_area_path %>.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

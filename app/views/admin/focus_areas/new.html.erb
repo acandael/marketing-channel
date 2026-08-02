@@ -1,0 +1,11 @@
+<% content_for :title, "New focus area" %>
+
+<%= link_to "← Back to focus areas", admin_focus_areas_path, class: "back-link" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">New focus area</h1>
+  </div>
+</header>
+
+<%= render "form", focus_area: @focus_area %>

@@ -1,5 +1,5 @@
 <%
-  first_specialty = practitioner.specialties.first&.name
+  specialty_name = practitioner.specialty&.name
   bio_excerpt = if practitioner.short_tagline.present?
     truncate(practitioner.short_tagline, length: 160)
   elsif practitioner.long_bio.body.present?
@@ -19,8 +19,8 @@
     <h3 class="featured__card-title">
       <%= link_to display_name(practitioner), public_practitioner_path(practitioner) %>
     </h3>
-    <% if first_specialty %>
-      <p class="featured__card-subtitle"><%= first_specialty %></p>
+    <% if specialty_name %>
+      <p class="featured__card-subtitle"><%= specialty_name %></p>
     <% end %>
   </header>
 
@@ -28,10 +28,10 @@
     <p class="featured__card-content"><%= bio_excerpt %></p>
   <% end %>
 
-  <% if practitioner.specialties.any? %>
+  <% if practitioner.focus_areas.any? %>
     <div class="featured__card-labels">
-      <% practitioner.specialties.first(3).each do |s| %>
-        <span class="featured__card-label"><%= s.name %></span>
+      <% practitioner.focus_areas.first(3).each do |fa| %>
+        <span class="featured__card-label"><%= fa.name %></span>
       <% end %>
     </div>
   <% end %>

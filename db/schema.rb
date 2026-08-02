@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_02_125813) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_02_145046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,14 +66,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_02_125813) do
     t.index ["unique_token"], name: "index_claim_invitations_on_unique_token", unique: true
   end
 
-  create_table "practitioner_specialties", force: :cascade do |t|
+  create_table "focus_areas", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "practitioner_id", null: false
-    t.bigint "specialty_id", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
     t.datetime "updated_at", null: false
-    t.index ["practitioner_id", "specialty_id"], name: "index_practitioner_specialties_uniqueness", unique: true
-    t.index ["practitioner_id"], name: "index_practitioner_specialties_on_practitioner_id"
-    t.index ["specialty_id"], name: "index_practitioner_specialties_on_specialty_id"
+    t.index ["name"], name: "index_focus_areas_on_name", unique: true
+    t.index ["slug"], name: "index_focus_areas_on_slug", unique: true
+  end
+
+  create_table "practitioner_focus_areas", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "focus_area_id", null: false
+    t.bigint "practitioner_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["focus_area_id"], name: "index_practitioner_focus_areas_on_focus_area_id"
+    t.index ["practitioner_id", "focus_area_id"], name: "index_practitioner_focus_areas_uniqueness", unique: true
+    t.index ["practitioner_id"], name: "index_practitioner_focus_areas_on_practitioner_id"
   end
 
   create_table "practitioners", force: :cascade do |t|
@@ -94,6 +103,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_02_125813) do
     t.string "salutation"
     t.string "short_tagline"
     t.string "slug"
+    t.bigint "specialty_id"
     t.string "street_address"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -103,6 +113,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_02_125813) do
     t.index ["postal_code"], name: "index_practitioners_on_postal_code"
     t.index ["published"], name: "index_practitioners_on_published"
     t.index ["slug"], name: "index_practitioners_on_slug", unique: true
+    t.index ["specialty_id"], name: "index_practitioners_on_specialty_id"
     t.index ["user_id"], name: "index_practitioners_on_user_id", unique: true
   end
 
@@ -158,8 +169,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_02_125813) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "claim_invitations", "practitioners"
-  add_foreign_key "practitioner_specialties", "practitioners"
-  add_foreign_key "practitioner_specialties", "specialties"
+  add_foreign_key "practitioner_focus_areas", "focus_areas"
+  add_foreign_key "practitioner_focus_areas", "practitioners"
+  add_foreign_key "practitioners", "specialties"
   add_foreign_key "practitioners", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "treatments", "practitioners"

@@ -1,0 +1,12 @@
+<% content_for :title, "Edit focus area" %>
+
+<%= link_to "← Back to focus areas", admin_focus_areas_path, class: "back-link" %>
+
+<header class="page-header">
+  <div>
+    <h1 class="page-header__title">Edit focus area</h1>
+    <p class="page-header__subtitle">Renaming is safe — the slug regenerates and existing assignments stay.</p>
+  </div>
+</header>
+
+<%= render "form", focus_area: @focus_area %>

@@ -1,13 +1,11 @@
 class Practitioner::ProfilesController < Practitioner::BaseController
   def edit
-    @specialties = Specialty.alphabetical
   end
 
   def update
     if @practitioner.update(profile_params)
       redirect_to edit_practitioner_profile_path, notice: "Profile saved."
     else
-      @specialties = Specialty.alphabetical
       render :edit, status: :unprocessable_content
     end
   end
@@ -32,7 +30,6 @@ class Practitioner::ProfilesController < Practitioner::BaseController
       :phone, :public_email, :website_url, :latitude, :longitude,
       :short_tagline, :long_bio, :qualifications,
       :profile_photo,
-      specialty_ids: [],
       opening_hours: opening_hours_permit
     )
   end

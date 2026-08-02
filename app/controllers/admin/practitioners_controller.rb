@@ -4,7 +4,7 @@ class Admin::PractitionersController < Admin::BaseController
 
   def index
     @filters = filter_params
-    scope = Practitioner.includes(:specialties, :latest_claim_invitation)
+    scope = Practitioner.includes(:specialty, :latest_claim_invitation)
                         .by_name(@filters[:q])
                         .by_city(@filters[:city])
                         .with_specialty(@filters[:specialty_id])
@@ -122,7 +122,7 @@ class Admin::PractitionersController < Admin::BaseController
     params.expect(practitioner: [
       :salutation, :full_name, :street_address, :postal_code, :city, :bundesland,
       :phone, :public_email, :website_url, :latitude, :longitude, :published,
-      specialty_ids: []
+      :specialty_id
     ])
   end
 end

@@ -1,5 +1,5 @@
 <%
-  first_specialty = @practitioner.specialties.first&.name
+  first_specialty = @practitioner.specialty&.name
   phone_href = @practitioner.phone.present? ? "tel:#{@practitioner.phone.gsub(/\s+/, '')}" : nil
   full_address = [
     @practitioner.street_address,
@@ -87,12 +87,12 @@
         </section>
       <% end %>
 
-      <% if @practitioner.specialties.any? %>
+      <% if @practitioner.focus_areas.any? %>
         <section class="profile-focus">
-          <h2 class="profile-focus__title">Focus Areas &amp; Specialties</h2>
+          <h2 class="profile-focus__title">Focus Areas</h2>
           <ul class="profile-focus__list">
-            <% @practitioner.specialties.each do |specialty| %>
-              <li class="profile-focus__item"><%= specialty.name %></li>
+            <% @practitioner.focus_areas.alphabetical.each do |fa| %>
+              <li class="profile-focus__item"><%= fa.name %></li>
             <% end %>
           </ul>
         </section>

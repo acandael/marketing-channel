@@ -13,17 +13,11 @@
     </div>
 
     <div class="form-field form-field--full">
-      <span class="form-field__label">Specialties</span>
-      <div class="form-field__checkbox-list">
-        <% @specialties.each do |specialty| %>
-          <label>
-            <%= check_box_tag "practitioner[specialty_ids][]", specialty.id, @practitioner.specialty_ids.include?(specialty.id) %>
-            <%= specialty.name %>
-          </label>
-        <% end %>
-      </div>
-      <%= hidden_field_tag "practitioner[specialty_ids][]", "" %>
-      <span class="form-field__hint">Specialties are managed by the admin team. Contact them if you need one added.</span>
+      <span class="form-field__label">Specialty &amp; focus areas</span>
+      <p class="form-field__hint" style="margin-bottom: 8px;">
+        Manage these on the dedicated
+        <%= link_to "Specialty & focus areas page", edit_practitioner_specialty_path %>.
+      </p>
     </div>
 
     <div class="form-field">

@@ -3,7 +3,7 @@ class Public::HomeController < Public::BaseController
     @filters = params.permit(:q, :near).to_h.symbolize_keys
 
     scope = Practitioner.published
-                        .includes(:specialties)
+                        .includes(:specialty, :focus_areas)
                         .with_attached_profile_photo
                         .by_query(@filters[:q])
                         .by_location(@filters[:near])

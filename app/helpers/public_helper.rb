@@ -5,9 +5,9 @@ module PublicHelper
   end
 
   def page_description_for(practitioner)
-    specialties = practitioner.specialties.first(3).pluck(:name).join(", ")
-    if specialties.present?
-      "#{practitioner.full_name}: #{specialties} in #{practitioner.city}."
+    parts = [practitioner.specialty&.name, *practitioner.focus_areas.limit(2).pluck(:name)].compact_blank
+    if parts.any?
+      "#{practitioner.full_name}: #{parts.join(', ')} in #{practitioner.city}."
     else
       "#{practitioner.full_name} in #{practitioner.city}."
     end

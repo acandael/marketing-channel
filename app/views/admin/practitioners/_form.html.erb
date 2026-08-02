@@ -21,20 +21,14 @@
       </div>
 
       <div class="form-field form-field--full">
-        <span class="form-field__label">Specialties</span>
-        <div class="form-field__checkbox-list">
-          <% Specialty.alphabetical.each do |specialty| %>
-            <label>
-              <%= check_box_tag "practitioner[specialty_ids][]", specialty.id,
-                    practitioner.specialty_ids.include?(specialty.id) %>
-              <%= specialty.name %>
-            </label>
-          <% end %>
-          <% if Specialty.count.zero? %>
-            <span class="muted">No specialties defined yet — <%= link_to "add one", new_admin_specialty_path %>.</span>
-          <% end %>
-        </div>
-        <%= hidden_field_tag "practitioner[specialty_ids][]", "" %>
+        <%= f.label :specialty_id, "Specialty", class: "form-field__label" %>
+        <%= f.select :specialty_id,
+              options_from_collection_for_select(Specialty.alphabetical, :id, :name, practitioner.specialty_id),
+              { include_blank: "— None —" },
+              class: "form-field__select" %>
+        <% if Specialty.count.zero? %>
+          <span class="form-field__hint">No specialties defined yet — <%= link_to "add one", new_admin_specialty_path %>.</span>
+        <% end %>
       </div>
 
       <div class="form-field">

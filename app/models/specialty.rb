@@ -1,6 +1,5 @@
 class Specialty < ApplicationRecord
-  has_many :practitioner_specialties, dependent: :destroy
-  has_many :practitioners, through: :practitioner_specialties
+  has_many :practitioners, dependent: :nullify
 
   before_validation :assign_slug
 
@@ -10,7 +9,7 @@ class Specialty < ApplicationRecord
   scope :alphabetical, -> { order(Arel.sql("LOWER(name)")) }
 
   def in_use?
-    practitioner_specialties.exists?
+    practitioners.exists?
   end
 
   def usage_count
