@@ -152,17 +152,6 @@
         </section>
       <% end %>
 
-      <% if @practitioner.languages_list.any? %>
-        <section class="profile-meta-section">
-          <h2 class="profile-services__title">Languages spoken</h2>
-          <ul class="profile-focus__list">
-            <% @practitioner.languages_list.each do |lang| %>
-              <li class="profile-focus__item"><%= lang %></li>
-            <% end %>
-          </ul>
-        </section>
-      <% end %>
-
       <% if @practitioner.qualifications_list.any? %>
         <section class="profile-meta-section">
           <h2 class="profile-services__title">Qualifications</h2>

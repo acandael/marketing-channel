@@ -24,7 +24,7 @@ class Practitioner < ApplicationRecord
 
   PREMIUM_FIELDS = %i[
     profile_photo short_tagline long_bio treatments opening_hours
-    languages_spoken qualifications years_in_practice gallery_images
+    qualifications years_in_practice gallery_images
   ].freeze
 
   belongs_to :user, optional: true
@@ -88,7 +88,10 @@ class Practitioner < ApplicationRecord
     query = "%#{sanitize_sql_like(q.to_s.strip)}%"
     matching_ids = unscoped
       .left_joins(:specialties)
-      .where("practitioners.full_name ILIKE :q OR specialties.name ILIKE :q", q: query)
+      .where(
+        "practitioners.full_name ILIKE :q OR specialties.name ILIKE :q OR specialties.search_aliases ILIKE :q",
+        q: query
+      )
       .select("practitioners.id")
     where(id: matching_ids)
   }
@@ -99,10 +102,6 @@ class Practitioner < ApplicationRecord
 
   def to_param
     slug.presence || super
-  end
-
-  def languages_list
-    (languages_spoken || "").split(/\r?\n/).map(&:strip).reject(&:blank?)
   end
 
   def qualifications_list
@@ -148,11 +147,10 @@ class Practitioner < ApplicationRecord
     filled += 1 if long_bio.body.present?
     filled += 1 if treatments.any?
     filled += 1 if has_any_opening_hours?
-    filled += 1 if languages_list.any?
     filled += 1 if qualifications_list.any?
     filled += 1 if years_in_practice.present?
     filled += 1 if gallery_images.attached?
-    ((filled.to_f / 9) * 100).round
+    ((filled.to_f / 8) * 100).round
   end
 
   def missing_premium_fields
@@ -162,7 +160,6 @@ class Practitioner < ApplicationRecord
     missing << "long bio"         if long_bio.body.blank?
     missing << "treatments"       if treatments.empty?
     missing << "opening hours"    unless has_any_opening_hours?
-    missing << "languages spoken" if languages_list.empty?
     missing << "qualifications"   if qualifications_list.empty?
     missing << "years in practice" if years_in_practice.blank?
     missing << "gallery images"   unless gallery_images.attached?

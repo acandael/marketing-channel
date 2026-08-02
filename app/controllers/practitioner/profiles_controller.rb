@@ -30,7 +30,7 @@ class Practitioner::ProfilesController < Practitioner::BaseController
     params.require(:practitioner).permit(
       :salutation, :full_name, :street_address, :postal_code, :city, :bundesland,
       :phone, :public_email, :website_url, :latitude, :longitude,
-      :short_tagline, :long_bio, :languages_spoken, :qualifications,
+      :short_tagline, :long_bio, :qualifications,
       :years_in_practice, :profile_photo,
       specialty_ids: [],
       gallery_images: [],

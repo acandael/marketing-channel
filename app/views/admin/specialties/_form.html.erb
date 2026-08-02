@@ -20,6 +20,11 @@
         <%= f.text_area :description, class: "form-field__textarea", rows: 3 %>
         <span class="form-field__hint">Optional short explanation of the specialty.</span>
       </div>
+      <div class="form-field form-field--full">
+        <%= f.label :search_aliases, "Search aliases", class: "form-field__label" %>
+        <%= f.text_area :search_aliases, class: "form-field__textarea", rows: 2 %>
+        <span class="form-field__hint">Comma-separated synonyms visitors might search for (e.g. “chiropractor, chiro”).</span>
+      </div>
     </div>
   </div>
 

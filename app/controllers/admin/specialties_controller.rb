@@ -48,6 +48,6 @@ class Admin::SpecialtiesController < Admin::BaseController
   end
 
   def specialty_params
-    params.expect(specialty: [:name, :description])
+    params.expect(specialty: [:name, :description, :search_aliases])
   end
 end

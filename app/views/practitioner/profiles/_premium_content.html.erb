@@ -68,11 +68,6 @@
     </div>
 
     <div class="form-field">
-      <%= f.label :languages_spoken, "Languages spoken", class: "form-field__label" %>
-      <%= f.text_area :languages_spoken, class: "form-field__textarea", rows: 3, placeholder: "One per line, e.g.&#10;Deutsch&#10;English" %>
-      <span class="form-field__hint">One language per line.</span>
-    </div>
-    <div class="form-field">
       <%= f.label :years_in_practice, "Years in practice", class: "form-field__label" %>
       <%= f.number_field :years_in_practice, class: "form-field__input", min: 0, max: 100 %>
     </div>
