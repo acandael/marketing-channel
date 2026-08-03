@@ -26,11 +26,6 @@ module AdminHelper
     )
   end
 
-  def sidebar_link(label, path, active_when:)
-    link_to label, path,
-      class: "admin-sidebar__link #{"is-active" if active_when}"
-  end
-
   def invitation_status_chip(practitioner)
     invitation = practitioner.latest_claim_invitation
     if invitation.nil?

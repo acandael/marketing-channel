@@ -17,31 +17,28 @@
   </head>
 
   <body>
-    <div class="admin-shell">
-      <aside class="admin-sidebar">
-        <%= link_to admin_root_path, class: "admin-sidebar__brand" do %>
-          Marketing Channel
-          <small>Admin</small>
+    <header class="topnav">
+      <div class="wrapper topnav__inner">
+        <%= link_to admin_root_path, class: "topnav__brand", "aria-label": "Marketing Channel — admin" do %>
+          <%= image_tag "/logo.svg", alt: "Marketing Channel", height: 32, class: "topnav__logo" %>
         <% end %>
-
-        <nav class="admin-sidebar__nav" aria-label="Admin navigation">
-          <%= sidebar_link "Dashboard",     admin_root_path,        active_when: controller_path == "admin/dashboard" %>
-          <%= sidebar_link "Practitioners", admin_practitioners_path, active_when: controller_path == "admin/practitioners" %>
-          <%= sidebar_link "Specialties",   admin_specialties_path, active_when: controller_path == "admin/specialties" %>
-          <%= sidebar_link "Focus areas",   admin_focus_areas_path, active_when: controller_path == "admin/focus_areas" %>
+        <nav class="topnav__nav" aria-label="Admin navigation">
+          <ul class="topnav__links">
+            <li><%= link_to "Dashboard",     admin_root_path,          class: "topnav__link" %></li>
+            <li><%= link_to "Practitioners", admin_practitioners_path, class: "topnav__link" %></li>
+            <li><%= link_to "Specialties",   admin_specialties_path,   class: "topnav__link" %></li>
+            <li><%= link_to "Focus areas",   admin_focus_areas_path,   class: "topnav__link" %></li>
+            <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+          </ul>
         </nav>
+      </div>
+    </header>
 
-        <div class="admin-sidebar__footer">
-          Signed in as<br>
-          <strong><%= current_admin&.email_address %></strong>
-          <%= button_to "Sign out", session_path, method: :delete, class: "btn btn--secondary btn--sm" %>
-        </div>
-      </aside>
-
-      <main class="admin-main">
+    <main>
+      <div class="wrapper">
         <%= render "shared/flash" %>
         <%= yield %>
-      </main>
-    </div>
+      </div>
+    </main>
   </body>
 </html>

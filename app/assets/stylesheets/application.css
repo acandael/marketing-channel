@@ -318,60 +318,6 @@
   .flash--notice { background: var(--color-accent-light); border-color: var(--color-accent); color: var(--color-accent-dark); }
   .flash--alert  { background: var(--color-danger-light); border-color: var(--color-danger); color: var(--color-danger-dark); }
 
-  .admin-shell {
-    display: grid;
-    grid-template-columns: calc(220 / 16 * 1rem) 1fr;
-    min-height: 100vh;
-  }
-  @media (width < calc(760 / 16 * 1rem)) {
-    .admin-shell { grid-template-columns: 1fr; }
-  }
-
-  .admin-sidebar {
-    background: var(--color-surface-sidebar);
-    border-right: 1px solid var(--color-border);
-    padding: 24px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .admin-sidebar__brand {
-    font-size: var(--font-size-h3);
-    font-weight: 700;
-    color: var(--color-text-black);
-    text-decoration: none;
-    padding: 0 12px;
-  }
-  .admin-sidebar__brand:hover { text-decoration: none; }
-  .admin-sidebar__brand small {
-    display: block;
-    font-size: var(--fs-12);
-    font-weight: 500;
-    color: var(--color-text-medium);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 4px;
-  }
-  .admin-sidebar__nav { display: flex; flex-direction: column; gap: 4px; }
-  .admin-sidebar__link {
-    display: block;
-    padding: 8px 12px;
-    border-radius: var(--radius-md);
-    color: var(--color-text-dark);
-    font-size: var(--font-size-body-text);
-    text-decoration: none;
-  }
-  .admin-sidebar__link:hover { background: var(--color-surface); color: var(--color-text-black); text-decoration: none; }
-  .admin-sidebar__link.is-active { background: var(--color-surface); color: var(--color-text-black); font-weight: 600; }
-  .admin-sidebar__footer { margin-top: auto; padding: 12px; color: var(--color-text-medium); font-size: var(--font-size-hint); }
-  .admin-sidebar__footer form { margin-top: 8px; }
-  .admin-sidebar__footer .btn { width: 100%; }
-
-  .admin-main { padding: 32px 40px; overflow-x: auto; }
-  @media (width < calc(760 / 16 * 1rem)) {
-    .admin-main { padding: 24px 20px; }
-  }
-
   .page-header {
     display: flex;
     justify-content: space-between;
