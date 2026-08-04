@@ -1,0 +1,31 @@
+<% content_for :title, "Settings" %>
+
+<%= link_to "← Back to dashboard", admin_root_path, class: "back-link" %>
+
+<header class="page-header">
+  <h1 class="page-header__title">Settings</h1>
+</header>
+
+<section class="form-section settings-card">
+  <h2 class="form-section__title">Change password</h2>
+  <p class="form-section__hint">
+    Signed in as <strong><%= Current.user.email_address %></strong>. You'll stay signed in on this device after changing your password.
+  </p>
+
+  <%= form_with url: admin_settings_path, method: :patch, class: "form", local: true do |f| %>
+    <div class="form-field">
+      <%= label_tag :current_password, "Current password", class: "form-field__label" %>
+      <%= password_field_tag :current_password, nil, required: true, autocomplete: "current-password", class: "form-field__input" %>
+    </div>
+    <div class="form-field">
+      <%= label_tag :new_password, "New password", class: "form-field__label" %>
+      <%= password_field_tag :new_password, nil, required: true, minlength: 8, autocomplete: "new-password", class: "form-field__input" %>
+      <span class="form-field__hint">At least 8 characters.</span>
+    </div>
+    <div class="form-field">
+      <%= label_tag :new_password_confirmation, "Confirm new password", class: "form-field__label" %>
+      <%= password_field_tag :new_password_confirmation, nil, required: true, minlength: 8, autocomplete: "new-password", class: "form-field__input" %>
+    </div>
+    <%= f.submit "Update password", class: "btn btn--primary" %>
+  <% end %>
+</section>

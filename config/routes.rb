@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index"
+    resource  :settings, only: [:show, :update]
     resources :specialties
     resources :focus_areas
     resources :practitioners do
