@@ -63,18 +63,11 @@ Rails.application.configure do
     protocol: "https"
   }
 
-  # Send transactional email through Resend's SMTP endpoint.
-  # Provide the API key via `bin/rails credentials:edit` under the `resend.api_key` key,
-  # or via the RESEND_API_KEY environment variable as a fallback.
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.resend.com",
-    port: 587,
-    user_name: "resend",
-    password: Rails.application.credentials.dig(:resend, :api_key) || ENV["RESEND_API_KEY"],
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  # Send transactional email through Resend's HTTP API.
+  # SMTP is blocked outbound on many hosts (DigitalOcean droplets in particular);
+  # the API path goes over HTTPS and avoids that.
+  # Provide the API key via the RESEND_API_KEY environment variable.
+  config.action_mailer.delivery_method = :resend
   config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
