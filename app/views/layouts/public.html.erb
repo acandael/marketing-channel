@@ -3,6 +3,7 @@
   <head>
     <title><%= [content_for(:title), "Holistic Health"].compact_blank.join(" · ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow"><%# TESTING PHASE — remove before public launch %>
     <% if content_for?(:description) %>
       <meta name="description" content="<%= content_for(:description) %>">
     <% end %>
@@ -23,26 +24,48 @@
   </head>
 
   <body>
-    <header class="topnav">
+    <header class="topnav" data-controller="topnav">
       <div class="wrapper topnav__inner">
         <%= link_to root_path, class: "topnav__brand", "aria-label": "Holistic Health — home" do %>
           <%= image_tag "/logo.svg", alt: "Holistic Health", height: 32, class: "topnav__logo" %>
         <% end %>
         <nav class="topnav__nav" aria-label="Site navigation">
-          <ul class="topnav__links">
-            <li><%= link_to "Home", root_path, class: "topnav__link" %></li>
-            <li><%= link_to "Find a Specialist", root_path(anchor: "results"), class: "topnav__link" %></li>
-            <% if Current.user&.admin? %>
-              <li><%= link_to "Admin", admin_root_path, class: "topnav__link" %></li>
-              <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
-            <% elsif Current.user&.practitioner? %>
-              <li><%= link_to "Dashboard", practitioner_root_path, class: "topnav__link" %></li>
-              <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
-            <% else %>
-              <li><%= link_to "List your practice", new_registration_path, class: "topnav__link" %></li>
-              <li><%= link_to "Sign in", new_session_path, class: "topnav__link topnav__link--pill" %></li>
-            <% end %>
-          </ul>
+          <span id="topnav-open-label" hidden>Open navigation</span>
+          <span id="topnav-close-label" hidden>Close navigation</span>
+
+          <div class="topnav__overlay" aria-hidden="true" data-action="click->topnav#close"></div>
+
+          <button type="button" class="topnav__toggle topnav__toggle--open"
+                  aria-expanded="false"
+                  aria-controls="topnav-menu"
+                  aria-labelledby="topnav-open-label"
+                  data-topnav-target="opener"
+                  data-action="click->topnav#open">
+            <%= image_tag "/icons/hamburger.svg", alt: "", width: 24, height: 18 %>
+          </button>
+
+          <div id="topnav-menu" class="topnav__menu" role="dialog" aria-labelledby="topnav-open-label"
+               data-topnav-target="menu">
+            <button type="button" class="topnav__toggle topnav__toggle--close"
+                    aria-labelledby="topnav-close-label"
+                    data-action="click->topnav#close">
+              <%= image_tag "/icons/close.svg", alt: "", width: 20, height: 20 %>
+            </button>
+            <ul class="topnav__links">
+              <li><%= link_to "Home", root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Find a Specialist", root_path(anchor: "results"), class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <% if Current.user&.admin? %>
+                <li><%= link_to "Admin", admin_root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+                <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+              <% elsif Current.user&.practitioner? %>
+                <li><%= link_to "Dashboard", practitioner_root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+                <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+              <% else %>
+                <li><%= link_to "List your practice", new_registration_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+                <li><%= link_to "Sign in", new_session_path, class: "topnav__link topnav__link--pill", data: { action: "click->topnav#close" } %></li>
+              <% end %>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>
@@ -51,5 +74,7 @@
       <%= render "shared/flash" %>
       <%= yield %>
     </main>
+
+    <%= render "shared/site_footer" %>
   </body>
 </html>

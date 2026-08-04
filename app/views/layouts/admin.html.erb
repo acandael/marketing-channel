@@ -3,6 +3,7 @@
   <head>
     <title><%= [content_for(:title), "Admin", "Marketing Channel"].compact.join(" · ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow"><%# TESTING PHASE — remove before public launch %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -17,19 +18,41 @@
   </head>
 
   <body>
-    <header class="topnav">
+    <header class="topnav" data-controller="topnav">
       <div class="wrapper topnav__inner">
         <%= link_to admin_root_path, class: "topnav__brand", "aria-label": "Marketing Channel — admin" do %>
           <%= image_tag "/logo.svg", alt: "Marketing Channel", height: 32, class: "topnav__logo" %>
         <% end %>
         <nav class="topnav__nav" aria-label="Admin navigation">
-          <ul class="topnav__links">
-            <li><%= link_to "Dashboard",     admin_root_path,          class: "topnav__link" %></li>
-            <li><%= link_to "Practitioners", admin_practitioners_path, class: "topnav__link" %></li>
-            <li><%= link_to "Specialties",   admin_specialties_path,   class: "topnav__link" %></li>
-            <li><%= link_to "Focus areas",   admin_focus_areas_path,   class: "topnav__link" %></li>
-            <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
-          </ul>
+          <span id="topnav-open-label" hidden>Open navigation</span>
+          <span id="topnav-close-label" hidden>Close navigation</span>
+
+          <div class="topnav__overlay" aria-hidden="true" data-action="click->topnav#close"></div>
+
+          <button type="button" class="topnav__toggle topnav__toggle--open"
+                  aria-expanded="false"
+                  aria-controls="topnav-menu"
+                  aria-labelledby="topnav-open-label"
+                  data-topnav-target="opener"
+                  data-action="click->topnav#open">
+            <%= image_tag "/icons/hamburger.svg", alt: "", width: 24, height: 18 %>
+          </button>
+
+          <div id="topnav-menu" class="topnav__menu" role="dialog" aria-labelledby="topnav-open-label"
+               data-topnav-target="menu">
+            <button type="button" class="topnav__toggle topnav__toggle--close"
+                    aria-labelledby="topnav-close-label"
+                    data-action="click->topnav#close">
+              <%= image_tag "/icons/close.svg", alt: "", width: 20, height: 20 %>
+            </button>
+            <ul class="topnav__links">
+              <li><%= link_to "Dashboard",     admin_root_path,          class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Practitioners", admin_practitioners_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Specialties",   admin_specialties_path,   class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Focus areas",   admin_focus_areas_path,   class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>
