@@ -50,6 +50,7 @@ class Public::RegistrationsController < Public::BaseController
 
     @sent_to = email
     @matched_existing = match.present?
+    flash.now[:notice] = "Verification email sent to #{email}. Check your inbox to finish setting up your profile."
     render :sent
   end
 
