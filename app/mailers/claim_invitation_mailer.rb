@@ -6,6 +6,6 @@ class ClaimInvitationMailer < ApplicationMailer
     @expires_on  = @invitation.expires_at.to_date
 
     mail to: @invitation.email_sent_to,
-         subject: "Claim your Marketing Channel profile"
+         subject: "Claim your Holistic Health profile"
   end
 end

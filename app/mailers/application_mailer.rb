@@ -1,8 +1,8 @@
 class ApplicationMailer < ActionMailer::Base
   default from: -> {
-    Rails.application.credentials.dig(:mail, :from) ||
-      ENV["MAIL_FROM"] ||
-      "Marketing Channel <no-reply@marketing-channel.example>"
+    ENV["MAIL_FROM"] ||
+      Rails.application.credentials.dig(:mail, :from) ||
+      "Holistic Health <no-reply@heal-and-grow.org>"
   }
 
   layout "mailer"
