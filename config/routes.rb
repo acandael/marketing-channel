@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get  "/list-your-practice", to: "public/registrations#new",    as: :new_registration
   post "/list-your-practice", to: "public/registrations#create", as: :registrations
+  get  "/list-your-practice/check-email", to: "public/registrations#sent", as: :registration_sent
 
   get "/practitioners/:slug",
       to: "public/practitioners#show",

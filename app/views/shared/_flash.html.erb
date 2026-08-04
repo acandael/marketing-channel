@@ -1,6 +1,7 @@
-<% if flash.any? %>
+<% messages = flash.to_hash.slice("notice", "alert") %>
+<% if messages.any? %>
   <div class="flash-list">
-    <% flash.each do |key, message| %>
+    <% messages.each do |key, message| %>
       <div class="flash flash--<%= key == "notice" ? "notice" : "alert" %>"><%= message %></div>
     <% end %>
   </div>

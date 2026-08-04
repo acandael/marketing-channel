@@ -4,6 +4,12 @@ class Public::RegistrationsController < Public::BaseController
     @specialties = Specialty.alphabetical
   end
 
+  def sent
+    @sent_to = flash[:sent_to]
+    @matched_existing = flash[:matched_existing]
+    redirect_to new_registration_path and return if @sent_to.blank?
+  end
+
   def create
     @form = registration_defaults.merge(sanitized_params)
     @specialties = Specialty.alphabetical
@@ -48,10 +54,10 @@ class Public::RegistrationsController < Public::BaseController
     invitation = practitioner.claim_invitations.create!(email_sent_to: email)
     ClaimInvitationMailer.with(invitation: invitation).invite.deliver_later
 
-    @sent_to = email
-    @matched_existing = match.present?
-    flash.now[:notice] = "Verification email sent to #{email}. Check your inbox to finish setting up your profile."
-    render :sent
+    flash[:sent_to] = email
+    flash[:matched_existing] = match.present?
+    redirect_to registration_sent_path,
+                notice: "Verification email sent to #{email}. Check your inbox to finish setting up your profile."
   end
 
   private
