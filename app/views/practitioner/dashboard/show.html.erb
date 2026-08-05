@@ -61,10 +61,13 @@
     <span class="dashboard-tile__hint">Set your main specialty and list the areas you focus on.</span>
   <% end %>
 
-  <% if @practitioner.published? %>
-    <%= link_to public_practitioner_path(@practitioner), class: "dashboard-tile", target: "_blank", rel: "noopener" do %>
+  <%= link_to public_practitioner_path(@practitioner), class: "dashboard-tile", target: "_blank", rel: "noopener" do %>
+    <% if @practitioner.published? %>
       <span class="dashboard-tile__label">View my public profile ↗</span>
       <span class="dashboard-tile__hint">Opens the page visitors will see.</span>
+    <% else %>
+      <span class="dashboard-tile__label">Preview my profile ↗</span>
+      <span class="dashboard-tile__hint">Opens the page as it will appear once published. Only you can see it.</span>
     <% end %>
   <% end %>
 

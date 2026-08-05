@@ -25,6 +25,15 @@
   </div>
 </nav>
 
+<% if @preview %>
+  <div class="wrapper" style="padding-block: 0 8px;">
+    <div class="preview-ribbon" role="note">
+      <strong>Preview</strong> — this is how your profile will appear once published. Only you can see it right now.
+      <%= link_to "Back to dashboard", practitioner_root_path, class: "preview-ribbon__link" %>
+    </div>
+  </div>
+<% end %>
+
 <% unless @practitioner.claimed? %>
   <div class="wrapper" style="padding-block: 0 8px;">
     <div class="claim-ribbon" role="note">
