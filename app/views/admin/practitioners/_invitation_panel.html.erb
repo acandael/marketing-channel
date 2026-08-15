@@ -28,7 +28,13 @@
       </p>
     </div>
 
-    <% unless practitioner.claimed? %>
+    <% if practitioner.claimed? %>
+      <%= button_to "Impersonate",
+            impersonate_admin_practitioner_path(practitioner),
+            method: :post,
+            class: "btn btn--secondary",
+            data: { turbo_confirm: "Sign in as #{practitioner.full_name}? Their dashboard will open under your session until you click ‘Return to admin’." } %>
+    <% else %>
       <button type="button"
               class="btn btn--secondary"
               data-action="click->invite-dialog#open">

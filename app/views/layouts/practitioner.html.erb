@@ -18,6 +18,18 @@
   </head>
 
   <body>
+    <% if Current.impersonating? %>
+      <div class="impersonation-banner" role="status">
+        <span class="impersonation-banner__text">
+          Impersonating <strong><%= Current.user.email_address %></strong>
+          as admin <%= Current.true_user.email_address %>
+        </span>
+        <%= button_to "Return to admin", admin_impersonation_path,
+              method: :delete,
+              class: "btn btn--sm btn--secondary" %>
+      </div>
+    <% end %>
+
     <header class="topnav" data-controller="topnav">
       <div class="wrapper topnav__inner">
         <%= link_to practitioner_root_path, class: "topnav__brand", "aria-label": "Holistic Health — dashboard" do %>

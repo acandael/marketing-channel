@@ -1,0 +1,11 @@
+claimed:
+  full_name: Claimed Practitioner
+  city: Berlin
+  slug: claimed-practitioner
+  user: claimed_practitioner_user
+  claimed_at: 2026-01-01 00:00:00
+
+unclaimed:
+  full_name: Unclaimed Practitioner
+  city: München
+  slug: unclaimed-practitioner

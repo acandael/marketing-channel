@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     resource  :settings, only: [:show, :update]
+    resource  :impersonation, only: [:destroy]
     resources :specialties
     resources :focus_areas
     resources :practitioners do
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
       end
       member do
         post :send_claim_invitation
+        post :impersonate, to: "impersonations#create"
       end
     end
   end

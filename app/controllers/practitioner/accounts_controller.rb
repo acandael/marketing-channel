@@ -1,4 +1,6 @@
 class Practitioner::AccountsController < Practitioner::BaseController
+  before_action :block_impersonator, only: :destroy
+
   def destroy
     user = Current.user
     practitioner = @practitioner
@@ -24,6 +26,12 @@ class Practitioner::AccountsController < Practitioner::BaseController
   end
 
   private
+
+  def block_impersonator
+    return unless Current.impersonating?
+    redirect_to practitioner_settings_path,
+                alert: "You can't delete an account while impersonating it."
+  end
 
   def admin_notification_address
     Rails.application.credentials.dig(:admin, :notification_email) ||

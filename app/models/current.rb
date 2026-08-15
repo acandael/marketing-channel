@@ -1,4 +1,15 @@
 class Current < ActiveSupport::CurrentAttributes
   attribute :session
-  delegate :user, to: :session, allow_nil: true
+
+  def user
+    session&.impersonated_user || session&.user
+  end
+
+  def true_user
+    session&.user
+  end
+
+  def impersonating?
+    session&.impersonating? || false
+  end
 end

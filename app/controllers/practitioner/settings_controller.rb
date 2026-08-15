@@ -1,4 +1,6 @@
 class Practitioner::SettingsController < Practitioner::BaseController
+  before_action :block_impersonator, only: :update
+
   def show
   end
 
@@ -14,6 +16,12 @@ class Practitioner::SettingsController < Practitioner::BaseController
   end
 
   private
+
+  def block_impersonator
+    return unless Current.impersonating?
+    redirect_to practitioner_settings_path,
+                alert: "You can't change account credentials while impersonating."
+  end
 
   def update_password
     unless Current.user.authenticate(params[:current_password].to_s)

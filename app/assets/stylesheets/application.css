@@ -1844,6 +1844,20 @@
     outline-offset: 1px;
     border-color: var(--color-accent);
   }
+
+  .impersonation-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    background: #fff4d1;
+    border-bottom: 1px solid #e6cf7a;
+    color: #5a4300;
+    font-size: var(--font-size-label);
+  }
+  .impersonation-banner__text { line-height: 1.35; }
+  .impersonation-banner form { margin: 0; }
 }
 
 @layer utility {
