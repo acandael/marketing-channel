@@ -1,6 +1,7 @@
 <tr>
   <td class="table__checkbox">
     <%= check_box_tag "practitioner_ids[]", practitioner.id, false,
+          form: "bulk-actions-form",
           data: { action: "change->bulk-actions#toggle", bulk_actions_target: "checkbox" },
           aria: { label: "Select #{practitioner.full_name}" } %>
   </td>

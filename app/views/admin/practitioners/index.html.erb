@@ -31,26 +31,24 @@
   </div>
 <% end %>
 
-<%= form_with url: admin_practitioners_path, method: :get, style: "display: none;" do |f|
-  # placeholder so bulk form can share query state if needed
-end %>
-
-<%= form_with url: "#", method: :patch, data: { controller: "bulk-actions", bulk_actions_target: "form" } do |f| %>
-  <div class="bulk-bar" data-bulk-actions-target="bar" role="region" aria-label="Bulk actions">
-    <span class="bulk-bar__count"><span data-bulk-actions-target="count">0</span> selected</span>
-    <%= button_tag "Publish", type: "submit", formaction: bulk_publish_admin_practitioners_path,
-          formmethod: "patch",
-          class: "btn btn--secondary btn--sm",
-          data: { turbo_confirm: "Publish the selected practitioners?" } %>
-    <%= button_tag "Unpublish", type: "submit", formaction: bulk_unpublish_admin_practitioners_path,
-          formmethod: "patch",
-          class: "btn btn--secondary btn--sm",
-          data: { turbo_confirm: "Unpublish the selected practitioners?" } %>
-    <%= button_tag "Delete", type: "submit", formaction: bulk_destroy_admin_practitioners_path,
-          formmethod: "post",
-          class: "btn btn--danger btn--sm",
-          data: { turbo_confirm: "Permanently delete the selected practitioners?", turbo_method: :delete } %>
-  </div>
+<div data-controller="bulk-actions">
+  <%= form_with url: "#", method: :patch, id: "bulk-actions-form", data: { bulk_actions_target: "form" } do |f| %>
+    <div class="bulk-bar" data-bulk-actions-target="bar" role="region" aria-label="Bulk actions">
+      <span class="bulk-bar__count"><span data-bulk-actions-target="count">0</span> selected</span>
+      <%= button_tag "Publish", type: "submit", formaction: bulk_publish_admin_practitioners_path,
+            formmethod: "patch",
+            class: "btn btn--secondary btn--sm",
+            data: { turbo_confirm: "Publish the selected practitioners?" } %>
+      <%= button_tag "Unpublish", type: "submit", formaction: bulk_unpublish_admin_practitioners_path,
+            formmethod: "patch",
+            class: "btn btn--secondary btn--sm",
+            data: { turbo_confirm: "Unpublish the selected practitioners?" } %>
+      <%= button_tag "Delete", type: "submit", formaction: bulk_destroy_admin_practitioners_path,
+            formmethod: "post",
+            class: "btn btn--danger btn--sm",
+            data: { turbo_confirm: "Permanently delete the selected practitioners?", turbo_method: :delete } %>
+    </div>
+  <% end %>
 
   <section class="table-card">
     <table class="table">
@@ -84,4 +82,4 @@ end %>
       </div>
     <% end %>
   </section>
-<% end %>
+</div>
