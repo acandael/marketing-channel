@@ -1,11 +1,11 @@
-<% content_for :title, "Edit my profile" %>
+<% content_for :title, "Mein Profil bearbeiten" %>
 
-<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+<%= link_to "← Zurück zum Dashboard", practitioner_root_path, class: "back-link" %>
 
 <header class="page-header">
   <div>
-    <h1 class="page-header__title">Edit my profile</h1>
-    <p class="page-header__subtitle">Update the basic details visitors see, and enrich the premium sections below.</p>
+    <h1 class="page-header__title">Mein Profil bearbeiten</h1>
+    <p class="page-header__subtitle">Aktualisieren Sie die grundlegenden Angaben, die Besucher sehen, und ergänzen Sie die darunter liegenden Premium-Bereiche.</p>
   </div>
 </header>
 
@@ -13,7 +13,7 @@
               class: "form", multipart: true do |f| %>
   <% if @practitioner.errors.any? %>
     <div class="flash flash--alert">
-      <strong><%= pluralize(@practitioner.errors.count, "error") %> prevented this from being saved:</strong>
+      <strong><%= pluralize(@practitioner.errors.count, "Fehler") %> haben das Speichern verhindert:</strong>
       <ul style="margin-top: 8px; margin-left: 20px;"><% @practitioner.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
     </div>
   <% end %>
@@ -22,7 +22,7 @@
   <%= render "premium_content", f: f %>
 
   <div class="form-actions">
-    <%= f.submit "Save changes", class: "btn btn--primary" %>
-    <%= link_to "Cancel", practitioner_root_path, class: "btn btn--ghost" %>
+    <%= f.submit "Änderungen speichern", class: "btn btn--primary" %>
+    <%= link_to "Abbrechen", practitioner_root_path, class: "btn btn--ghost" %>
   </div>
 <% end %>

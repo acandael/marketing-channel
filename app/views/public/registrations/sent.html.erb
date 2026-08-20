@@ -1,25 +1,25 @@
-<% content_for :title, "Check your email" %>
+<% content_for :title, "Überprüfen Sie Ihre E-Mails" %>
 
 <div class="claim-shell">
   <div class="claim-card">
-    <h1>Check your email</h1>
+    <h1>Überprüfen Sie Ihre E-Mails</h1>
     <p>
-      We've sent a verification link to <strong><%= @sent_to %></strong>. Click it to set your password and finish setting up your listing.
+      Wir haben Ihnen einen Bestätigungslink an <strong><%= @sent_to %></strong> zugesandt. Klicken Sie darauf, um Ihr Passwort festzulegen und die Einrichtung Ihres Eintrags abzuschließen.
     </p>
 
     <% if @matched_existing %>
       <div class="flash flash--notice mt-16">
-        We found an existing basic listing for this practice. The link will let you claim it.
+        Wir haben einen bereits bestehenden Basiseintrag für diese Praxis gefunden. Über den Link können Sie ihn übernehmen.
       </div>
     <% end %>
 
     <p class="muted text-sm mt-16">
-      The link expires in 30 days. Didn't get it? Check spam, or
-      <%= link_to "try again", new_registration_path %>.
+      Der Link ist 30 Tage lang gültig. Haben Sie ihn nicht erhalten? Überprüfen Sie Ihren Spam-Ordner oder
+      <%= link_to "versuchen Sie es erneut", new_registration_path %>.
     </p>
 
     <p class="mt-16">
-      <%= link_to "Back to home", root_path, class: "btn btn--ghost" %>
+      <%= link_to "Zurück zur Startseite", root_path, class: "btn btn--ghost" %>
     </p>
   </div>
 </div>

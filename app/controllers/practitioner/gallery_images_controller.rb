@@ -5,21 +5,21 @@ class Practitioner::GalleryImagesController < Practitioner::BaseController
   def create
     files = Array(params[:gallery_images]).reject(&:blank?)
     if files.empty?
-      redirect_to practitioner_gallery_images_path, alert: "Choose at least one image to upload."
+      redirect_to practitioner_gallery_images_path, alert: "Wählen Sie mindestens ein Bild zum Hochladen aus."
       return
     end
 
     remaining = Practitioner::MAX_GALLERY_IMAGES - @practitioner.gallery_images.count
     if files.size > remaining
       redirect_to practitioner_gallery_images_path,
-                  alert: "You can add #{helpers.pluralize(remaining, 'more image')} (max #{Practitioner::MAX_GALLERY_IMAGES} total)."
+                  alert: "Sie können noch #{helpers.pluralize(remaining, 'weiteres Bild', plural: 'weitere Bilder')} hinzufügen (maximal #{Practitioner::MAX_GALLERY_IMAGES} insgesamt)."
       return
     end
 
     invalid = files.find { |f| !valid_upload?(f) }
     if invalid
       redirect_to practitioner_gallery_images_path,
-                  alert: "Each image must be JPEG, PNG, or WebP and under 5 MB."
+                  alert: "Jedes Bild muss JPEG, PNG oder WebP sein und darf höchstens 5 MB groß sein."
       return
     end
 
@@ -29,7 +29,7 @@ class Practitioner::GalleryImagesController < Practitioner::BaseController
     @practitioner.update_column(:gallery_order, Array(@practitioner.gallery_order) + new_ids)
 
     redirect_to practitioner_gallery_images_path,
-                notice: "#{helpers.pluralize(files.size, 'image')} added to your gallery."
+                notice: "#{helpers.pluralize(files.size, 'Bild', plural: 'Bilder')} zu Ihrer Galerie hinzugefügt."
   end
 
   def destroy
@@ -38,9 +38,9 @@ class Practitioner::GalleryImagesController < Practitioner::BaseController
       attachment.purge_later
       remaining_order = Array(@practitioner.gallery_order).map(&:to_i) - [attachment.id]
       @practitioner.update_column(:gallery_order, remaining_order)
-      redirect_to practitioner_gallery_images_path, notice: "Image removed."
+      redirect_to practitioner_gallery_images_path, notice: "Bild entfernt."
     else
-      redirect_to practitioner_gallery_images_path, alert: "Image not found."
+      redirect_to practitioner_gallery_images_path, alert: "Bild nicht gefunden."
     end
   end
 

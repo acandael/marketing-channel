@@ -1,12 +1,12 @@
-<% content_for :title, "Gallery" %>
+<% content_for :title, "Galerie" %>
 
-<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+<%= link_to "← Zurück zum Dashboard", practitioner_root_path, class: "back-link" %>
 
 <header class="page-header">
   <div>
-    <h1 class="page-header__title">Gallery</h1>
+    <h1 class="page-header__title">Galerie</h1>
     <p class="page-header__subtitle">
-      Photos shown on your public profile. Up to <%= Practitioner::MAX_GALLERY_IMAGES %> images, JPEG/PNG/WebP, 5&nbsp;MB each.
+      Fotos, die in Ihrem öffentlichen Profil angezeigt werden. Bis zu <%= Practitioner::MAX_GALLERY_IMAGES %> Bilder, JPEG/PNG/WebP, jeweils 5&nbsp;MB.
     </p>
   </div>
 </header>
@@ -14,45 +14,45 @@
 <% remaining = Practitioner::MAX_GALLERY_IMAGES - @practitioner.gallery_images.count %>
 
 <section class="form-section">
-  <h2 class="form-section__title">Add images</h2>
+  <h2 class="form-section__title">Bilder hinzufügen</h2>
   <% if remaining > 0 %>
     <%= form_with url: practitioner_gallery_images_path, method: :post, multipart: true, class: "form" do |f| %>
       <div class="form-field">
         <%= f.file_field :gallery_images, accept: "image/jpeg,image/png,image/webp",
                          multiple: true, class: "form-field__input", required: true %>
-        <span class="form-field__hint">You can add <%= pluralize(remaining, "more image") %>.</span>
+        <span class="form-field__hint">Sie können noch <%= pluralize(remaining, "weiteres Bild", plural: "weitere Bilder") %> hinzufügen.</span>
       </div>
       <div class="form-actions">
-        <%= f.submit "Upload", class: "btn btn--primary" %>
+        <%= f.submit "Hochladen", class: "btn btn--primary" %>
       </div>
     <% end %>
   <% else %>
-    <p class="muted">You've reached the maximum of <%= Practitioner::MAX_GALLERY_IMAGES %> images. Delete one below to add another.</p>
+    <p class="muted">Sie haben das Maximum von <%= Practitioner::MAX_GALLERY_IMAGES %> Bildern erreicht. Löschen Sie unten ein Bild, um ein weiteres hinzuzufügen.</p>
   <% end %>
 </section>
 
 <% if @practitioner.gallery_images.attached? %>
   <section class="form-section">
-    <h2 class="form-section__title">Current gallery (<%= @practitioner.gallery_images.count %>)</h2>
-    <p class="form-field__hint" style="margin-bottom: 12px;">Drag images to reorder — the new order is saved automatically.</p>
+    <h2 class="form-section__title">Aktuelle Galerie (<%= @practitioner.gallery_images.count %>)</h2>
+    <p class="form-field__hint" style="margin-bottom: 12px;">Bilder per Drag &amp; Drop verschieben, um die Reihenfolge zu ändern — die neue Reihenfolge wird automatisch gespeichert.</p>
     <div class="gallery-manage"
          data-controller="gallery-sortable"
          data-gallery-sortable-url-value="<%= reorder_practitioner_gallery_images_path %>">
       <% @practitioner.ordered_gallery_attachments.each do |att| %>
         <figure class="gallery-manage__item" data-attachment-id="<%= att.id %>">
-          <%= image_tag att.variant(:thumb), alt: "Gallery image", class: "gallery-manage__img" %>
-          <%= button_to "Delete",
+          <%= image_tag att.variant(:thumb), alt: "Galeriebild", class: "gallery-manage__img" %>
+          <%= button_to "Löschen",
                 practitioner_gallery_image_path(att.id),
                 method: :delete,
                 class: "btn btn--danger btn--sm gallery-manage__delete",
-                data: { turbo_confirm: "Delete this image?" } %>
+                data: { turbo_confirm: "Dieses Bild löschen?" } %>
         </figure>
       <% end %>
     </div>
   </section>
 <% else %>
   <div class="empty-state">
-    <h3>No images yet</h3>
-    <p class="muted">Upload your first image above to start building your gallery.</p>
+    <h3>Noch keine Bilder</h3>
+    <p class="muted">Laden Sie oben Ihr erstes Bild hoch, um mit dem Aufbau Ihrer Galerie zu beginnen.</p>
   </div>
 <% end %>

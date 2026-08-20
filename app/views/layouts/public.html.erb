@@ -26,12 +26,12 @@
   <body>
     <header class="topnav" data-controller="topnav">
       <div class="wrapper topnav__inner">
-        <%= link_to root_path, class: "topnav__brand", "aria-label": "Holistic Health — home" do %>
+        <%= link_to root_path, class: "topnav__brand", "aria-label": "Holistic Health — Startseite" do %>
           <%= image_tag "/logo.svg", alt: "Holistic Health", height: 32, class: "topnav__logo" %>
         <% end %>
-        <nav class="topnav__nav" aria-label="Site navigation">
-          <span id="topnav-open-label" hidden>Open navigation</span>
-          <span id="topnav-close-label" hidden>Close navigation</span>
+        <nav class="topnav__nav" aria-label="Website-Navigation">
+          <span id="topnav-open-label" hidden>Navigation öffnen</span>
+          <span id="topnav-close-label" hidden>Navigation schließen</span>
 
           <div class="topnav__overlay" aria-hidden="true" data-action="click->topnav#close"></div>
 
@@ -52,17 +52,17 @@
               <%= image_tag "/icons/close.svg", alt: "", width: 20, height: 20 %>
             </button>
             <ul class="topnav__links">
-              <li><%= link_to "Home", root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-              <li><%= link_to "Find a Specialist", root_path(anchor: "results"), class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Startseite", root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Therapeuten finden", root_path(anchor: "results"), class: "topnav__link", data: { action: "click->topnav#close" } %></li>
               <% if Current.user&.admin? %>
                 <li><%= link_to "Admin", admin_root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-                <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+                <li><%= button_to "Abmelden", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
               <% elsif Current.user&.practitioner? %>
                 <li><%= link_to "Dashboard", practitioner_root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-                <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+                <li><%= button_to "Abmelden", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
               <% else %>
-                <li><%= link_to "List your practice", new_registration_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-                <li><%= link_to "Sign in", new_session_path, class: "topnav__link topnav__link--pill", data: { action: "click->topnav#close" } %></li>
+                <li><%= link_to "Praxis eintragen", new_registration_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+                <li><%= link_to "Anmelden", new_session_path, class: "topnav__link topnav__link--pill", data: { action: "click->topnav#close" } %></li>
               <% end %>
             </ul>
           </div>

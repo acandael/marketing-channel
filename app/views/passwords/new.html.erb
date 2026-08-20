@@ -1,20 +1,20 @@
-<% content_for :title, "Reset password" %>
+<% content_for :title, "Passwort zurücksetzen" %>
 
 <div class="auth-shell">
   <div class="auth-card">
-    <h1 class="auth-card__title">Reset password</h1>
+    <h1 class="auth-card__title">Passwort zurücksetzen</h1>
     <%= render "shared/flash" %>
 
     <%= form_with url: passwords_path, class: "form" do |f| %>
       <div class="form-field">
-        <%= f.label :email_address, "Email", class: "form-field__label" %>
+        <%= f.label :email_address, "E-Mail-Adresse", class: "form-field__label" %>
         <%= f.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "form-field__input" %>
       </div>
-      <%= f.submit "Email reset instructions", class: "btn btn--primary" %>
+      <%= f.submit "Anleitung zum Zurücksetzen senden", class: "btn btn--primary" %>
     <% end %>
 
     <p class="auth-card__footer">
-      <%= link_to "Back to sign in", new_session_path %>
+      <%= link_to "Zurück zur Anmeldung", new_session_path %>
     </p>
   </div>
 </div>

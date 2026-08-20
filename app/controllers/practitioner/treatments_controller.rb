@@ -12,7 +12,7 @@ class Practitioner::TreatmentsController < Practitioner::BaseController
   def create
     @treatment = @practitioner.treatments.new(treatment_params)
     if @treatment.save
-      redirect_to practitioner_treatments_path, notice: "Treatment added."
+      redirect_to practitioner_treatments_path, notice: "Behandlung hinzugefügt."
     else
       render :new, status: :unprocessable_content
     end
@@ -23,7 +23,7 @@ class Practitioner::TreatmentsController < Practitioner::BaseController
 
   def update
     if @treatment.update(treatment_params)
-      redirect_to practitioner_treatments_path, notice: "Treatment updated."
+      redirect_to practitioner_treatments_path, notice: "Behandlung aktualisiert."
     else
       render :edit, status: :unprocessable_content
     end
@@ -31,7 +31,7 @@ class Practitioner::TreatmentsController < Practitioner::BaseController
 
   def destroy
     @treatment.destroy
-    redirect_to practitioner_treatments_path, notice: "Treatment removed."
+    redirect_to practitioner_treatments_path, notice: "Behandlung entfernt."
   end
 
   private

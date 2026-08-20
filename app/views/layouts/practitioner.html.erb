@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= [content_for(:title).presence || "My dashboard", "Holistic Health"].join(" · ") %></title>
+    <title><%= [content_for(:title).presence || "Mein Dashboard", "Holistic Health"].join(" · ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex, nofollow"><%# TESTING PHASE — remove before public launch %>
     <%= csrf_meta_tags %>
@@ -21,10 +21,10 @@
     <% if Current.impersonating? %>
       <div class="impersonation-banner" role="status">
         <span class="impersonation-banner__text">
-          Impersonating <strong><%= Current.user.email_address %></strong>
-          as admin <%= Current.true_user.email_address %>
+          Angemeldet als <strong><%= Current.user.email_address %></strong>
+          über Administrator <%= Current.true_user.email_address %>
         </span>
-        <%= button_to "Return to admin", admin_impersonation_path,
+        <%= button_to "Zurück zum Administrator", admin_impersonation_path,
               method: :delete,
               class: "btn btn--sm btn--secondary" %>
       </div>
@@ -32,12 +32,12 @@
 
     <header class="topnav" data-controller="topnav">
       <div class="wrapper topnav__inner">
-        <%= link_to practitioner_root_path, class: "topnav__brand", "aria-label": "Holistic Health — dashboard" do %>
+        <%= link_to practitioner_root_path, class: "topnav__brand", "aria-label": "Holistic Health — Dashboard" do %>
           <%= image_tag "/logo.svg", alt: "Holistic Health", height: 32, class: "topnav__logo" %>
         <% end %>
-        <nav class="topnav__nav" aria-label="Practitioner navigation">
-          <span id="topnav-open-label" hidden>Open navigation</span>
-          <span id="topnav-close-label" hidden>Close navigation</span>
+        <nav class="topnav__nav" aria-label="Navigation für Therapeuten">
+          <span id="topnav-open-label" hidden>Navigation öffnen</span>
+          <span id="topnav-close-label" hidden>Navigation schließen</span>
 
           <div class="topnav__overlay" aria-hidden="true" data-action="click->topnav#close"></div>
 
@@ -59,10 +59,10 @@
             </button>
             <ul class="topnav__links">
               <li><%= link_to "Dashboard", practitioner_root_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-              <li><%= link_to "Edit profile", edit_practitioner_profile_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-              <li><%= link_to "Treatments", practitioner_treatments_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-              <li><%= link_to "Settings", practitioner_settings_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
-              <li><%= button_to "Sign out", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
+              <li><%= link_to "Profil bearbeiten", edit_practitioner_profile_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Behandlungen", practitioner_treatments_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= link_to "Einstellungen", practitioner_settings_path, class: "topnav__link", data: { action: "click->topnav#close" } %></li>
+              <li><%= button_to "Abmelden", session_path, method: :delete, class: "topnav__link topnav__link--button" %></li>
             </ul>
           </div>
         </nav>

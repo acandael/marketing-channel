@@ -22,7 +22,7 @@ class Practitioner::AccountsController < Practitioner::BaseController
 
     terminate_session
     redirect_to root_path,
-                notice: "Your account has been deleted. Your listing is now unclaimed; an admin can re-invite you if you change your mind."
+                notice: "Ihr Konto wurde gelöscht. Ihr Eintrag ist jetzt nicht beansprucht; ein Administrator kann Sie erneut einladen, falls Sie Ihre Meinung ändern."
   end
 
   private
@@ -30,7 +30,7 @@ class Practitioner::AccountsController < Practitioner::BaseController
   def block_impersonator
     return unless Current.impersonating?
     redirect_to practitioner_settings_path,
-                alert: "You can't delete an account while impersonating it."
+                alert: "Sie können ein Konto nicht löschen, während Sie es stellvertretend nutzen."
   end
 
   def admin_notification_address

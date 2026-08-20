@@ -1,20 +1,20 @@
-<% content_for :title, "Update password" %>
+<% content_for :title, "Passwort aktualisieren" %>
 
 <div class="auth-shell">
   <div class="auth-card">
-    <h1 class="auth-card__title">Update password</h1>
+    <h1 class="auth-card__title">Passwort aktualisieren</h1>
     <%= render "shared/flash" %>
 
     <%= form_with url: password_path(params[:token]), method: :put, class: "form" do |f| %>
       <div class="form-field">
-        <%= f.label :password, "New password", class: "form-field__label" %>
+        <%= f.label :password, "Neues Passwort", class: "form-field__label" %>
         <%= f.password_field :password, required: true, autocomplete: "new-password", maxlength: 72, class: "form-field__input" %>
       </div>
       <div class="form-field">
-        <%= f.label :password_confirmation, "Repeat new password", class: "form-field__label" %>
+        <%= f.label :password_confirmation, "Neues Passwort wiederholen", class: "form-field__label" %>
         <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72, class: "form-field__input" %>
       </div>
-      <%= f.submit "Save", class: "btn btn--primary" %>
+      <%= f.submit "Speichern", class: "btn btn--primary" %>
     <% end %>
   </div>
 </div>

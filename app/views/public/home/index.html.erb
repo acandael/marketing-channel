@@ -1,15 +1,16 @@
-<% content_for :title, "Find your natural health practitioner" %>
-<% content_for :description, "Connect with trusted experts in holistic wellness across Germany. Search by specialty or location." %>
+<% content_for :title, "Finden Sie Ihren Naturheilpraktiker" %>
+<% content_for :description, "Nehmen Sie Kontakt zu vertrauenswürdigen Experten für ganzheitliches Wohlbefinden in ganz Deutschland auf. Suchen Sie nach Fachgebiet oder Standort." %>
 
 <section class="hero">
   <div class="wrapper hero__wrapper">
     <div class="hero__text">
       <h1 class="hero__title">
-        Find Your Natural <span class="hero__title-accent">Health Practitioner</span>
+        Finden Sie Ihren <span class="hero__title-accent">Naturheilpraktiker</span>
       </h1>
       <p class="hero__content">
-        Connect with trusted experts in holistic wellness near you. Discover personalized care that
-        nurtures your mind, body, and spirit.
+        Nehmen Sie Kontakt zu vertrauenswürdigen Experten für ganzheitliches Wohlbefinden in Ihrer Nähe
+        auf. Entdecken Sie eine individuell auf Sie zugeschnittene Betreuung, die Körper, Geist und
+        Seele gleichermaßen stärkt.
       </p>
     </div>
 
@@ -19,18 +20,18 @@
                name="q"
                value="<%= @filters[:q] %>"
                class="hero__search-input hero__search-input--query"
-               placeholder="Practitioner or specialisation"
-               aria-label="Practitioner or specialisation">
+               placeholder="Therapeut oder Fachgebiet"
+               aria-label="Therapeut oder Fachgebiet">
         <input type="text"
                name="near"
                value="<%= @filters[:near] %>"
                class="hero__search-input hero__search-input--near"
-               placeholder="Region or postal code"
-               aria-label="Region or postal code">
-        <button type="submit" class="hero__search-submit">Search practitioners</button>
+               placeholder="Region oder Postleitzahl"
+               aria-label="Region oder Postleitzahl">
+        <button type="submit" class="hero__search-submit">Therapeuten suchen</button>
       </div>
       <p class="hero__search-note">
-        Search from verified natural health practitioners across the network.
+        Suchen Sie unter den geprüften Naturheilpraktikern im gesamten Netzwerk.
       </p>
     <% end %>
   </div>
@@ -40,20 +41,20 @@
   <div class="wrapper featured__wrapper">
     <div class="featured__text">
       <h2 class="featured__title">
-        <%= @searching ? "Search results" : "Featured Practitioners" %>
+        <%= @searching ? "Suchergebnisse" : "Empfohlene Therapeuten" %>
       </h2>
       <p class="featured__content">
         <% if @searching %>
-          <%= pluralize(@pagy.count, "practitioner") %> matching
+          <%= pluralize(@pagy.count, "Therapeut", plural: "Therapeuten") %> passend
           <% if @filters[:q].present? %>
-            <strong><%= @filters[:q] %></strong>
+            zu <strong><%= @filters[:q] %></strong>
           <% end %>
           <% if @filters[:near].present? %>
-            near <strong><%= @filters[:near] %></strong>
+            in der Nähe von <strong><%= @filters[:near] %></strong>
           <% end %>·
-          <%= link_to "reset", root_path %>
+          <%= link_to "zurücksetzen", root_path %>
         <% else %>
-          Highly rated experts ready to guide your wellness journey.
+          Experten, die Sie auf Ihrem Weg zu mehr Wohlbefinden begleiten.
         <% end %>
       </p>
     </div>
@@ -72,9 +73,9 @@
       <% end %>
     <% else %>
       <div class="empty-state">
-        <h3>No practitioners found</h3>
-        <p class="muted">Try a different search term or clear your filters.</p>
-        <p class="mt-16"><%= link_to "Reset filters", root_path, class: "btn btn--secondary" %></p>
+        <h3>Keine Therapeuten gefunden</h3>
+        <p class="muted">Versuchen Sie einen anderen Suchbegriff oder setzen Sie die Filter zurück.</p>
+        <p class="mt-16"><%= link_to "Filter zurücksetzen", root_path, class: "btn btn--secondary" %></p>
       </div>
     <% end %>
   </div>

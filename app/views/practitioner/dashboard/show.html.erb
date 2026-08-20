@@ -1,4 +1,4 @@
-<% content_for :title, "My dashboard" %>
+<% content_for :title, "Mein Dashboard" %>
 
 <section class="practitioner-hero">
   <div class="practitioner-hero__avatar">
@@ -10,13 +10,13 @@
   </div>
 
   <div class="practitioner-hero__body">
-    <p class="text-meta">Signed in as <%= Current.user.email_address %></p>
+    <p class="text-meta">Angemeldet als <%= Current.user.email_address %></p>
     <h1 class="practitioner-hero__name"><%= @practitioner.full_name %></h1>
     <p class="muted"><%= @practitioner.city %><%= " · #{@practitioner.bundesland}" if @practitioner.bundesland.present? %></p>
 
     <div class="row mt-16" style="gap: 8px;">
       <span class="badge <%= @practitioner.published? ? "badge--published" : "badge--unpublished" %>">
-        <%= @practitioner.published? ? "Visible on directory" : "Hidden from directory" %>
+        <%= @practitioner.published? ? "Im Verzeichnis sichtbar" : "Im Verzeichnis ausgeblendet" %>
       </span>
     </div>
   </div>
@@ -24,7 +24,7 @@
 
 <section class="completeness-card">
   <div class="completeness-card__header">
-    <h2>Profile completeness</h2>
+    <h2>Vollständigkeit des Profils</h2>
     <span class="completeness-card__percent"><%= @practitioner.profile_completeness %>%</span>
   </div>
   <div class="completeness-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<%= @practitioner.profile_completeness %>">
@@ -33,57 +33,57 @@
   <% missing = @practitioner.missing_premium_fields %>
   <% if missing.any? %>
     <p class="text-meta mt-16">
-      Add the following to reach 100%: <strong><%= missing.to_sentence %></strong>.
+      Fügen Sie folgende Angaben hinzu, um 100 % zu erreichen: <strong><%= missing.to_sentence %></strong>.
     </p>
   <% else %>
-    <p class="text-meta mt-16">All premium fields are filled in. Nicely done.</p>
+    <p class="text-meta mt-16">Alle Premium-Felder sind ausgefüllt. Sehr gut gemacht.</p>
   <% end %>
 </section>
 
 <section class="dashboard-tiles">
   <%= link_to edit_practitioner_profile_path, class: "dashboard-tile" do %>
-    <span class="dashboard-tile__label">Edit profile</span>
-    <span class="dashboard-tile__hint">Update your details, photo, bio, opening hours, and more.</span>
+    <span class="dashboard-tile__label">Profil bearbeiten</span>
+    <span class="dashboard-tile__hint">Aktualisieren Sie Ihre Angaben, Ihr Foto, Ihre Biografie, Ihre Öffnungszeiten und vieles mehr.</span>
   <% end %>
 
   <%= link_to practitioner_treatments_path, class: "dashboard-tile" do %>
-    <span class="dashboard-tile__label">Treatments (<%= @practitioner.treatments.count %>)</span>
-    <span class="dashboard-tile__hint">Manage the treatments you offer, with prices and durations.</span>
+    <span class="dashboard-tile__label">Behandlungen (<%= @practitioner.treatments.count %>)</span>
+    <span class="dashboard-tile__hint">Verwalten Sie die von Ihnen angebotenen Behandlungen mit Preisen und Dauer.</span>
   <% end %>
 
   <%= link_to practitioner_gallery_images_path, class: "dashboard-tile" do %>
-    <span class="dashboard-tile__label">Gallery (<%= @practitioner.gallery_images.count %>)</span>
-    <span class="dashboard-tile__hint">Add or remove photos shown on your public profile.</span>
+    <span class="dashboard-tile__label">Galerie (<%= @practitioner.gallery_images.count %>)</span>
+    <span class="dashboard-tile__hint">Fügen Sie Fotos zu Ihrem öffentlichen Profil hinzu oder entfernen Sie sie daraus.</span>
   <% end %>
 
   <%= link_to edit_practitioner_specialty_path, class: "dashboard-tile" do %>
-    <span class="dashboard-tile__label">Specialty &amp; focus areas (<%= @practitioner.focus_areas.count %>)</span>
-    <span class="dashboard-tile__hint">Set your main specialty and list the areas you focus on.</span>
+    <span class="dashboard-tile__label">Fachgebiet und Schwerpunkte (<%= @practitioner.focus_areas.count %>)</span>
+    <span class="dashboard-tile__hint">Geben Sie Ihr Hauptfachgebiet an und listen Sie die Bereiche auf, auf die Sie sich konzentrieren.</span>
   <% end %>
 
   <%= link_to public_practitioner_path(@practitioner), class: "dashboard-tile", target: "_blank", rel: "noopener" do %>
     <% if @practitioner.published? %>
-      <span class="dashboard-tile__label">View my public profile ↗</span>
-      <span class="dashboard-tile__hint">Opens the page visitors will see.</span>
+      <span class="dashboard-tile__label">Mein öffentliches Profil ansehen ↗</span>
+      <span class="dashboard-tile__hint">Öffnet die Seite, die Besucher sehen werden.</span>
     <% else %>
-      <span class="dashboard-tile__label">Preview my profile ↗</span>
-      <span class="dashboard-tile__hint">Opens the page as it will appear once published. Only you can see it.</span>
+      <span class="dashboard-tile__label">Vorschau meines Profils ↗</span>
+      <span class="dashboard-tile__hint">Öffnet die Seite so, wie sie nach der Veröffentlichung erscheinen wird. Nur Sie können sie sehen.</span>
     <% end %>
   <% end %>
 
   <%= link_to practitioner_settings_path, class: "dashboard-tile" do %>
-    <span class="dashboard-tile__label">Settings</span>
-    <span class="dashboard-tile__hint">Change password, email, or delete your account.</span>
+    <span class="dashboard-tile__label">Einstellungen</span>
+    <span class="dashboard-tile__hint">Passwort ändern, E-Mail-Adresse ändern oder Konto löschen.</span>
   <% end %>
 </section>
 
 <section class="publish-toggle">
-  <h3>Directory visibility</h3>
-  <p class="text-meta">Toggle whether your listing appears on the public directory. An admin can override this.</p>
+  <h3>Sichtbarkeit im Verzeichnis</h3>
+  <p class="text-meta">Legen Sie fest, ob Ihr Eintrag im öffentlichen Verzeichnis angezeigt wird. Ein Administrator kann diese Einstellung überschreiben.</p>
   <% if @practitioner.published? %>
-    <%= button_to "Hide from directory", practitioner_unpublish_path, method: :patch, class: "btn btn--secondary",
-          data: { turbo_confirm: "Hide your profile from the public directory?" } %>
+    <%= button_to "Aus dem Verzeichnis ausblenden", practitioner_unpublish_path, method: :patch, class: "btn btn--secondary",
+          data: { turbo_confirm: "Ihr Profil aus dem öffentlichen Verzeichnis ausblenden?" } %>
   <% else %>
-    <%= button_to "Show on directory", practitioner_publish_path, method: :patch, class: "btn btn--primary" %>
+    <%= button_to "Im Verzeichnis anzeigen", practitioner_publish_path, method: :patch, class: "btn btn--primary" %>
   <% end %>
 </section>

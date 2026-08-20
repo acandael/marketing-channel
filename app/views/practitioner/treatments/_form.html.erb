@@ -4,7 +4,7 @@
               class: "form" do |f| %>
   <% if treatment.errors.any? %>
     <div class="flash flash--alert">
-      <strong><%= pluralize(treatment.errors.count, "error") %> prevented this from being saved:</strong>
+      <strong><%= pluralize(treatment.errors.count, "Fehler") %> haben das Speichern verhindert:</strong>
       <ul style="margin-top: 8px; margin-left: 20px;">
         <% treatment.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
       </ul>
@@ -13,38 +13,38 @@
 
   <div class="form-section">
     <h2 class="form-section__title">Details</h2>
-    <p class="form-section__hint">Add a title and any details you'd like visitors to see.</p>
+    <p class="form-section__hint">Geben Sie einen Titel und alle Details ein, die Besucher sehen sollen.</p>
 
     <div class="form-grid">
       <div class="form-field form-field--full">
-        <%= f.label :title, class: "form-field__label" %>
+        <%= f.label :title, "Titel", class: "form-field__label" %>
         <%= f.text_field :title, class: "form-field__input", required: true, autofocus: true, maxlength: 120 %>
       </div>
 
       <div class="form-field form-field--full">
-        <%= f.label :description, class: "form-field__label" %>
+        <%= f.label :description, "Beschreibung", class: "form-field__label" %>
         <%= f.text_area :description, class: "form-field__textarea", rows: 4,
-              placeholder: "e.g. 60-minute treatment tailored to your primary complaint." %>
+              placeholder: "z. B. eine 60-minütige Behandlung, individuell auf Ihr Hauptbeschwerdebild abgestimmt." %>
       </div>
 
       <div class="form-field">
-        <%= f.label :duration_minutes, "Duration (minutes)", class: "form-field__label" %>
+        <%= f.label :duration_minutes, "Dauer (Minuten)", class: "form-field__label" %>
         <%= f.number_field :duration_minutes, class: "form-field__input", min: 1 %>
       </div>
 
       <div class="form-field">
-        <%= f.label :price_euros, "Price (€)", class: "form-field__label" %>
+        <%= f.label :price_euros, "Preis (€)", class: "form-field__label" %>
         <%= f.text_field :price_euros,
               value: treatment.price_euros ? format("%.2f", treatment.price_euros) : nil,
               class: "form-field__input",
               inputmode: "decimal",
-              placeholder: "0.00" %>
+              placeholder: "0,00" %>
       </div>
     </div>
   </div>
 
   <div class="form-actions">
-    <%= f.submit(treatment.persisted? ? "Save changes" : "Add treatment", class: "btn btn--primary") %>
-    <%= link_to "Cancel", practitioner_treatments_path, class: "btn btn--ghost" %>
+    <%= f.submit(treatment.persisted? ? "Änderungen speichern" : "Behandlung hinzufügen", class: "btn btn--primary") %>
+    <%= link_to "Abbrechen", practitioner_treatments_path, class: "btn btn--ghost" %>
   </div>
 <% end %>

@@ -1,13 +1,13 @@
-<% content_for :title, "Treatments" %>
+<% content_for :title, "Behandlungen" %>
 
-<%= link_to "← Back to dashboard", practitioner_root_path, class: "back-link" %>
+<%= link_to "← Zurück zum Dashboard", practitioner_root_path, class: "back-link" %>
 
 <header class="page-header">
   <div>
-    <h1 class="page-header__title">Treatments</h1>
-    <p class="page-header__subtitle">Your treatment menu — what visitors see under "Treatments Offered" on your public profile.</p>
+    <h1 class="page-header__title">Behandlungen</h1>
+    <p class="page-header__subtitle">Ihr Behandlungsangebot — was Besucher unter „Angebotene Behandlungen“ in Ihrem öffentlichen Profil sehen.</p>
   </div>
-  <%= link_to "Add treatment", new_practitioner_treatment_path, class: "btn btn--primary" %>
+  <%= link_to "Behandlung hinzufügen", new_practitioner_treatment_path, class: "btn btn--primary" %>
 </header>
 
 <% if @treatments.any? %>
@@ -28,11 +28,11 @@
             <div class="treatment-list__price"><%= t.formatted_price %></div>
           <% end %>
           <div class="treatment-list__actions">
-            <%= link_to "Edit", edit_practitioner_treatment_path(t), class: "btn btn--ghost btn--sm" %>
-            <%= button_to "Delete", practitioner_treatment_path(t), method: :delete,
+            <%= link_to "Bearbeiten", edit_practitioner_treatment_path(t), class: "btn btn--ghost btn--sm" %>
+            <%= button_to "Löschen", practitioner_treatment_path(t), method: :delete,
                   class: "btn btn--danger btn--sm",
                   form: { style: "display:inline-block" },
-                  data: { turbo_confirm: "Delete “#{t.title}”?" } %>
+                  data: { turbo_confirm: "„#{t.title}“ löschen?" } %>
           </div>
         </div>
       </li>
@@ -40,8 +40,8 @@
   </ul>
 <% else %>
   <div class="empty-state">
-    <h3>No treatments yet</h3>
-    <p class="muted">Add your first treatment to show it on your public profile.</p>
-    <p class="mt-16"><%= link_to "Add your first treatment", new_practitioner_treatment_path, class: "btn btn--primary" %></p>
+    <h3>Noch keine Behandlungen</h3>
+    <p class="muted">Fügen Sie Ihre erste Behandlung hinzu, damit sie in Ihrem öffentlichen Profil angezeigt wird.</p>
+    <p class="mt-16"><%= link_to "Fügen Sie Ihre erste Behandlung hinzu", new_practitioner_treatment_path, class: "btn btn--primary" %></p>
   </div>
 <% end %>

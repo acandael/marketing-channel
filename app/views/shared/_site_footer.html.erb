@@ -2,47 +2,47 @@
   <div class="wrapper footer__wrapper">
     <div class="footer__top">
       <div class="footer__brand">
-        <%= link_to root_path, class: "footer__homelink", "aria-label": "Holistic Health — home" do %>
+        <%= link_to root_path, class: "footer__homelink", "aria-label": "Holistic Health — Startseite" do %>
           <%= image_tag "/icons/logo-mark.svg", alt: "", width: 26, height: 27, class: "footer__logo" %>
           <span class="footer__logo-text">
             Holistic <span class="footer__logo-accent">Health</span>
           </span>
         <% end %>
         <p class="footer__tagline">
-          A directory that helps people find trusted holistic health specialists close to home.
+          Ein Verzeichnis, das Menschen dabei hilft, Spezialisten für ganzheitliche Gesundheit in ihrer Nähe zu finden.
         </p>
       </div>
 
       <div class="footer__col">
-        <h3 class="footer__col-title">Practitioners</h3>
+        <h3 class="footer__col-title">Therapeuten</h3>
         <ul class="footer__links">
-          <li><%= link_to "Specialist directory", root_path(anchor: "results"), class: "footer__link" %></li>
-          <li><%= link_to "List your practice", new_registration_path, class: "footer__link" %></li>
-          <li><%= link_to "Manage profile", practitioner_root_path, class: "footer__link" %></li>
+          <li><%= link_to "Fachverzeichnis", root_path(anchor: "results"), class: "footer__link" %></li>
+          <li><%= link_to "Praxis eintragen", new_registration_path, class: "footer__link" %></li>
+          <li><%= link_to "Profil verwalten", practitioner_root_path, class: "footer__link" %></li>
         </ul>
       </div>
 
       <div class="footer__col">
-        <h3 class="footer__col-title">Resources</h3>
+        <h3 class="footer__col-title">Ressourcen</h3>
         <ul class="footer__links">
-          <li><a href="#" class="footer__link">Wellness articles</a></li>
-          <li><a href="#" class="footer__link">Natural therapies</a></li>
-          <li><a href="#" class="footer__link">FAQs</a></li>
+          <li><a href="#" class="footer__link">Artikel zum Thema Wellness</a></li>
+          <li><a href="#" class="footer__link">Naturheilverfahren</a></li>
+          <li><a href="#" class="footer__link">Häufig gestellte Fragen</a></li>
         </ul>
       </div>
 
       <div class="footer__col">
-        <h3 class="footer__col-title">Company</h3>
+        <h3 class="footer__col-title">Unternehmen</h3>
         <ul class="footer__links">
-          <li><a href="#" class="footer__link">About us</a></li>
-          <li><a href="#" class="footer__link">Contact</a></li>
-          <li><a href="#" class="footer__link">Privacy policy</a></li>
+          <li><a href="#" class="footer__link">Über uns</a></li>
+          <li><a href="#" class="footer__link">Kontakt</a></li>
+          <li><a href="#" class="footer__link">Datenschutzerklärung</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer__bottom">
-      <p class="footer__copyright">© <%= Date.current.year %> Holistic Health. All rights reserved.</p>
+      <p class="footer__copyright">© <%= Date.current.year %> Holistic Health. Alle Rechte vorbehalten.</p>
       <ul class="footer__socials">
         <li><a href="#" class="footer__social" aria-label="Facebook"><%= image_tag "/icons/facebook.svg", alt: "", width: 20, height: 20 %></a></li>
         <li><a href="#" class="footer__social" aria-label="Instagram"><%= image_tag "/icons/instagram.svg", alt: "", width: 20, height: 20 %></a></li>

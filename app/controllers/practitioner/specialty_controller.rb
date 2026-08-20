@@ -11,7 +11,7 @@ class Practitioner::SpecialtyController < Practitioner::BaseController
     @practitioner.focus_area_ids = focus_area_ids
 
     if @practitioner.save
-      redirect_to edit_practitioner_specialty_path, notice: "Specialty and focus areas saved."
+      redirect_to edit_practitioner_specialty_path, notice: "Fachgebiete und Schwerpunkte gespeichert."
     else
       @specialties = Specialty.alphabetical
       @suggested_focus_areas = FocusArea.alphabetical

@@ -11,7 +11,7 @@ class Practitioner::SettingsController < Practitioner::BaseController
     when "email"
       request_email_change
     else
-      redirect_to practitioner_settings_path, alert: "Unknown settings section."
+      redirect_to practitioner_settings_path, alert: "Unbekannter Einstellungsbereich."
     end
   end
 
@@ -20,38 +20,38 @@ class Practitioner::SettingsController < Practitioner::BaseController
   def block_impersonator
     return unless Current.impersonating?
     redirect_to practitioner_settings_path,
-                alert: "You can't change account credentials while impersonating."
+                alert: "Sie können Kontoanmeldedaten nicht ändern, während Sie ein Konto stellvertretend nutzen."
   end
 
   def update_password
     unless Current.user.authenticate(params[:current_password].to_s)
-      flash.now[:alert] = "Current password is incorrect."
+      flash.now[:alert] = "Das aktuelle Passwort ist nicht korrekt."
       return render :show, status: :unprocessable_content
     end
 
     new_password = params[:new_password].to_s
     if new_password.length < 8
-      flash.now[:alert] = "New password must be at least 8 characters."
+      flash.now[:alert] = "Das neue Passwort muss mindestens 8 Zeichen lang sein."
       return render :show, status: :unprocessable_content
     end
     if new_password != params[:new_password_confirmation].to_s
-      flash.now[:alert] = "Password confirmation does not match."
+      flash.now[:alert] = "Die Passwortbestätigung stimmt nicht überein."
       return render :show, status: :unprocessable_content
     end
 
     Current.user.update!(password: new_password)
-    redirect_to practitioner_settings_path, notice: "Password updated."
+    redirect_to practitioner_settings_path, notice: "Passwort aktualisiert."
   end
 
   def request_email_change
     new_email = params[:new_email_address].to_s.strip.downcase
     unless new_email.match?(URI::MailTo::EMAIL_REGEXP)
-      flash.now[:alert] = "Please provide a valid email address."
+      flash.now[:alert] = "Bitte geben Sie eine gültige E-Mail-Adresse an."
       return render :show, status: :unprocessable_content
     end
 
     if User.active.where.not(id: Current.user.id).exists?(email_address: new_email)
-      flash.now[:alert] = "That email is already in use."
+      flash.now[:alert] = "Diese E-Mail-Adresse wird bereits verwendet."
       return render :show, status: :unprocessable_content
     end
 
@@ -59,6 +59,6 @@ class Practitioner::SettingsController < Practitioner::BaseController
     EmailChangeMailer.with(user: Current.user).confirm.deliver_later
 
     redirect_to practitioner_settings_path,
-                notice: "Check #{new_email} for a confirmation link. It expires in 24 hours."
+                notice: "Prüfen Sie #{new_email} auf einen Bestätigungslink. Er ist 24 Stunden gültig."
   end
 end
